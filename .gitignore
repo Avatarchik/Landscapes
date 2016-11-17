@@ -1,0 +1,15 @@
+Temp/
+[Oo]bj/
+Library/
+
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.apk
+*.zip
+*.mp4
