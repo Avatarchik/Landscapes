@@ -1,0 +1,467 @@
+fileFormatVersion: 2
+guid: 20747a8f81ca2d04baae93923d80752c
+timeCreated: 1476340123
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Chair
+    100002: Chair 1
+    100004: //RootNode
+    100006: Cylinder
+    100008: directionalLight1
+    100010: directionalLight2
+    100012: group1
+    100014: group2
+    100016: mechanic_parts:Plane066
+    100018: mechanic_parts:Plane068
+    100020: parts:polySurface76
+    100022: parts:polySurface83
+    100024: pCube10
+    100026: pCube11
+    100028: pCube12
+    100030: pCube13
+    100032: pCube14
+    100034: pCube15
+    100036: pCube16
+    100038: pCube17
+    100040: pCube18
+    100042: pCube19
+    100044: pCube20
+    100046: pCube7
+    100048: pCube8
+    100050: pCube9
+    100052: Plane068
+    100054: PlateL
+    100056: plateR
+    100058: PlateRear_L
+    100060: PlateRear_L1
+    100062: platform
+    100064: Platform_base
+    100066: pointLight1
+    100068: pointLight2
+    100070: polySurface104
+    100072: polySurface106
+    100074: polySurface11
+    100076: polySurface112
+    100078: polySurface113
+    100080: polySurface116
+    100082: pTorus1
+    100084: pTorus10
+    100086: pTorus12
+    100088: pTorus13
+    100090: pTorus14
+    100092: pTorus15
+    100094: pTorus2
+    100096: pTorus3
+    100098: pTorus4
+    100100: pTorus5
+    100102: pTorus6
+    100104: pTorus7
+    100106: pTorus8
+    100108: pTorus9
+    100110: RoundPlate
+    100112: transform11
+    100114: transform17
+    100116: transform18
+    400000: Chair
+    400002: Chair 1
+    400004: //RootNode
+    400006: Cylinder
+    400008: directionalLight1
+    400010: directionalLight2
+    400012: group1
+    400014: group2
+    400016: mechanic_parts:Plane066
+    400018: mechanic_parts:Plane068
+    400020: parts:polySurface76
+    400022: parts:polySurface83
+    400024: pCube10
+    400026: pCube11
+    400028: pCube12
+    400030: pCube13
+    400032: pCube14
+    400034: pCube15
+    400036: pCube16
+    400038: pCube17
+    400040: pCube18
+    400042: pCube19
+    400044: pCube20
+    400046: pCube7
+    400048: pCube8
+    400050: pCube9
+    400052: Plane068
+    400054: PlateL
+    400056: plateR
+    400058: PlateRear_L
+    400060: PlateRear_L1
+    400062: platform
+    400064: Platform_base
+    400066: pointLight1
+    400068: pointLight2
+    400070: polySurface104
+    400072: polySurface106
+    400074: polySurface11
+    400076: polySurface112
+    400078: polySurface113
+    400080: polySurface116
+    400082: pTorus1
+    400084: pTorus10
+    400086: pTorus12
+    400088: pTorus13
+    400090: pTorus14
+    400092: pTorus15
+    400094: pTorus2
+    400096: pTorus3
+    400098: pTorus4
+    400100: pTorus5
+    400102: pTorus6
+    400104: pTorus7
+    400106: pTorus8
+    400108: pTorus9
+    400110: RoundPlate
+    400112: transform11
+    400114: transform17
+    400116: transform18
+    2300000: Chair
+    2300002: Chair 1
+    2300004: Cylinder
+    2300006: mechanic_parts:Plane066
+    2300008: mechanic_parts:Plane068
+    2300010: pCube10
+    2300012: pCube11
+    2300014: pCube12
+    2300016: pCube13
+    2300018: pCube14
+    2300020: pCube15
+    2300022: pCube16
+    2300024: pCube17
+    2300026: pCube18
+    2300028: pCube19
+    2300030: pCube20
+    2300032: pCube9
+    2300034: Plane068
+    2300036: PlateL
+    2300038: plateR
+    2300040: PlateRear_L
+    2300042: PlateRear_L1
+    2300044: platform
+    2300046: polySurface104
+    2300048: polySurface106
+    2300050: polySurface112
+    2300052: polySurface113
+    2300054: polySurface116
+    2300056: pTorus1
+    2300058: pTorus10
+    2300060: pTorus12
+    2300062: pTorus13
+    2300064: pTorus14
+    2300066: pTorus15
+    2300068: pTorus2
+    2300070: pTorus3
+    2300072: pTorus4
+    2300074: pTorus5
+    2300076: pTorus6
+    2300078: pTorus7
+    2300080: pTorus8
+    2300082: pTorus9
+    2300084: RoundPlate
+    3300000: Chair
+    3300002: Chair 1
+    3300004: Cylinder
+    3300006: mechanic_parts:Plane066
+    3300008: mechanic_parts:Plane068
+    3300010: pCube10
+    3300012: pCube11
+    3300014: pCube12
+    3300016: pCube13
+    3300018: pCube14
+    3300020: pCube15
+    3300022: pCube16
+    3300024: pCube17
+    3300026: pCube18
+    3300028: pCube19
+    3300030: pCube20
+    3300032: pCube9
+    3300034: Plane068
+    3300036: PlateL
+    3300038: plateR
+    3300040: PlateRear_L
+    3300042: PlateRear_L1
+    3300044: platform
+    3300046: polySurface104
+    3300048: polySurface106
+    3300050: polySurface112
+    3300052: polySurface113
+    3300054: polySurface116
+    3300056: pTorus1
+    3300058: pTorus10
+    3300060: pTorus12
+    3300062: pTorus13
+    3300064: pTorus14
+    3300066: pTorus15
+    3300068: pTorus2
+    3300070: pTorus3
+    3300072: pTorus4
+    3300074: pTorus5
+    3300076: pTorus6
+    3300078: pTorus7
+    3300080: pTorus8
+    3300082: pTorus9
+    3300084: RoundPlate
+    4300000: plateR
+    4300002: PlateL
+    4300004: RoundPlate
+    4300006: PlateRear_L
+    4300008: Chair
+    4300010: platform
+    4300012: Cylinder
+    4300014: PlateRear_L1
+    4300016: pTorus1
+    4300018: pTorus2
+    4300020: pTorus3
+    4300022: pTorus4
+    4300024: pTorus5
+    4300026: pTorus6
+    4300028: pTorus7
+    4300030: pTorus8
+    4300032: pTorus12
+    4300034: pTorus13
+    4300036: polySurface104
+    4300038: polySurface106
+    4300040: polySurface112
+    4300042: polySurface113
+    4300044: Chair
+    4300046: polySurface116
+    4300048: mechanic_parts:Plane066
+    4300050: mechanic_parts:Plane068
+    4300052: pTorus9
+    4300054: pTorus10
+    4300056: Plane068
+    4300058: pCube11
+    4300060: pCube10
+    4300062: pCube9
+    4300064: pCube14
+    4300066: pCube13
+    4300068: pCube12
+    4300070: pTorus14
+    4300072: pTorus15
+    4300074: pCube15
+    4300076: pCube18
+    4300078: pCube20
+    4300080: pCube17
+    4300082: pCube16
+    4300084: pCube19
+    7400000: Take 001
+    9500000: //RootNode
+    11100000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 231.00002
+      wrapMode: 8
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Chair
+        weight: 1
+      - path: Chair/polySurface116
+        weight: 1
+      - path: directionalLight1
+        weight: 1
+      - path: directionalLight2
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group1/pCube9
+        weight: 1
+      - path: group1/pCube10
+        weight: 1
+      - path: group1/pCube11
+        weight: 1
+      - path: group1/pCube12
+        weight: 1
+      - path: group1/pCube13
+        weight: 1
+      - path: group1/pCube14
+        weight: 1
+      - path: group1/Plane068
+        weight: 1
+      - path: group1/pTorus9
+        weight: 1
+      - path: group1/pTorus10
+        weight: 1
+      - path: group1/pTorus14
+        weight: 1
+      - path: group1/pTorus15
+        weight: 1
+      - path: group2
+        weight: 1
+      - path: group2/pCube15
+        weight: 1
+      - path: group2/pCube16
+        weight: 1
+      - path: group2/pCube17
+        weight: 1
+      - path: group2/pCube18
+        weight: 1
+      - path: group2/pCube19
+        weight: 1
+      - path: group2/pCube20
+        weight: 1
+      - path: mechanic_parts:Plane066
+        weight: 1
+      - path: mechanic_parts:Plane068
+        weight: 1
+      - path: parts:polySurface76
+        weight: 1
+      - path: parts:polySurface76/transform18
+        weight: 1
+      - path: parts:polySurface83
+        weight: 1
+      - path: parts:polySurface83/transform17
+        weight: 1
+      - path: pCube7
+        weight: 1
+      - path: pCube8
+        weight: 1
+      - path: Platform_base
+        weight: 1
+      - path: Platform_base/Chair 1
+        weight: 1
+      - path: Platform_base/PlateL
+        weight: 1
+      - path: Platform_base/plateR
+        weight: 1
+      - path: Platform_base/PlateRear_L
+        weight: 1
+      - path: Platform_base/PlateRear_L1
+        weight: 1
+      - path: Platform_base/platform
+        weight: 1
+      - path: Platform_base/platform/Cylinder
+        weight: 1
+      - path: Platform_base/RoundPlate
+        weight: 1
+      - path: pointLight1
+        weight: 1
+      - path: pointLight2
+        weight: 1
+      - path: polySurface11
+        weight: 1
+      - path: polySurface11/transform11
+        weight: 1
+      - path: polySurface104
+        weight: 1
+      - path: polySurface106
+        weight: 1
+      - path: polySurface112
+        weight: 1
+      - path: polySurface113
+        weight: 1
+      - path: pTorus1
+        weight: 1
+      - path: pTorus2
+        weight: 1
+      - path: pTorus3
+        weight: 1
+      - path: pTorus4
+        weight: 1
+      - path: pTorus5
+        weight: 1
+      - path: pTorus6
+        weight: 1
+      - path: pTorus7
+        weight: 1
+      - path: pTorus8
+        weight: 1
+      - path: pTorus12
+        weight: 1
+      - path: pTorus13
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
