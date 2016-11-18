@@ -200,6 +200,8 @@ public class DownloadWindow : FOHUIWindow
         if (error)
             Debug.LogError(www.error);
 
+        yield return new WaitForSeconds(3f);
+
         DownloadComplete();
     }
 
