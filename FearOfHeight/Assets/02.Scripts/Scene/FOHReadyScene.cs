@@ -16,7 +16,7 @@ public class FOHReadyScene : FSMBase
 
         Application.targetFrameRate = 60;
         OVRManager.instance.vsyncCount = 1;
-        OVRManager.cpuLevel = 1;
+        OVRManager.cpuLevel = 0;
         OVRManager.gpuLevel = 1;
     }
 
@@ -158,6 +158,7 @@ public class FOHReadyScene : FSMBase
 
     private IEnumerator DownloadEnterState()
     {
+        OVRManager.cpuLevel = 1;
         game.blink.FadeOut();
         game.background.BackgroundSplash();
         game.ui.ChangeWindow(FOHWindowType.Download);
@@ -166,6 +167,7 @@ public class FOHReadyScene : FSMBase
 
     private IEnumerator DownloadExitState()
     {
+        OVRManager.cpuLevel = 0;
         game.blink.FadeIn();
         yield break;
     }
