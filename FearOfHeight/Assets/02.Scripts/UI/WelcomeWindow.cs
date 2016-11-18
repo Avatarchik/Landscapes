@@ -25,7 +25,7 @@ public class WelcomeWindow : FOHUIWindow
     public override void Active()
     {
         base.Active();
-        game.sounds.Play("FOH_Cityscapes_Main_001 " + LocalizationManager.CurrentLanguage, game.NAVI);
+        game.sounds.Play("FOH_Landscapes_Main_001 " + LocalizationManager.CurrentLanguage, game.NAVI);
         welcome.SetActive(true);
         StartCoroutine(ScrollingRoutine());
     }
