@@ -16,7 +16,7 @@ public class DisplayStatus : MonoBehaviour
 
     void Update ()
 	{
-        text.text = time.ToString("0") + "Sec / TEMP : " + OVRManager.batteryTemperature + " / " + strFPS + " / CPU : " + OVRManager.cpuLevel + " / GPU : " + OVRManager.gpuLevel + " / Device : " + SystemInfo.deviceModel + "/" + SystemInfo.deviceName;
+        text.text = time.ToString("0") + "Sec / TEMP : " + OVRManager.batteryTemperature + " / " + strFPS + " / CPU : " + OVRManager.cpuLevel + " / GPU : " + OVRManager.gpuLevel + " / Device : " + SystemInfo.deviceModel;
 	    time += Time.deltaTime;
         UpdateFPS();
 	}
