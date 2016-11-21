@@ -4,6 +4,15 @@ using I2.Loc;
 
 public class PlayWindow : FOHUIWindow
 {
+    private bool fallReady;
+
+    public override void Init()
+    {
+        base.Init();
+        fallReady = false;
+
+    }
+
     public override void ManualUpdate()
     {
         base.ManualUpdate();
@@ -11,17 +20,21 @@ public class PlayWindow : FOHUIWindow
         {
             if (game.FohStage.nowLevelType == LevelType.LV4)
             {
-                if (game.FohStage.mediaPlayer.Control.GetCurrentTimeMs() >= 15f)
+                if (fallReady == false && game.FohStage.mediaPlayer.Control.GetCurrentTimeMs() >= 12000f)
                 {
-                    // game.sounds.Play("FOH_Cityscapes_Main_001 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                    print("dd");
+                    fallReady = true;
+                    game.sounds.Play("FOH_Landscapes_Other_002 " + LocalizationManager.CurrentLanguage, game.NAVI);
                 }
             }
 
             if (game.FohStage.nowLevelType == LevelType.LV5)
             {
-                if (game.FohStage.mediaPlayer.Control.GetCurrentTimeMs() >= 15f)
+                if (fallReady == false && game.FohStage.mediaPlayer.Control.GetCurrentTimeMs() >= 18000f)
                 {
-                    // game.sounds.Play("FOH_Cityscapes_Main_001 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                    print("dd");
+                    fallReady = true;
+                    game.sounds.Play("FOH_Landscapes_Other_002 " + LocalizationManager.CurrentLanguage, game.NAVI);
                 }
             }
         }
