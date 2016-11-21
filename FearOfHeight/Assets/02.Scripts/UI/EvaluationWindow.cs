@@ -28,9 +28,15 @@ public class EvaluationWindow : FOHUIWindow
     [SerializeField]
     private GameObject[] grades;
 
+    [SerializeField]
+    private GameObject congratulations;
+
     public override void Init()
     {
         base.Init();
+
+        congratulations.SetActive(false);
+
         game.background.bGMeshRenderer.material =
         game.contents.GetPanoramaMaterial(new FOHAccount.GameDataKey(game.FohStage.nowStageType,
             game.FohStage.nowLevelType));
@@ -84,8 +90,8 @@ public class EvaluationWindow : FOHUIWindow
             {
                 nextLevelButton.SetActive(true);
                 tryAgainButton.transform.DOLocalMoveX(-350f, 0f);
-                nextLevelButton.transform.DOLocalMoveX(0f, 0f);
-                selectLocationButton.transform.DOLocalMoveX(350f, 0f);
+                nextLevelButton.transform.DOLocalMoveX(350f, 0f);
+                selectLocationButton.transform.DOLocalMoveX(0f, 0f);
                 // nextLockButton.SetActive(false);
             }
 
@@ -102,7 +108,11 @@ public class EvaluationWindow : FOHUIWindow
                 else if (game.FohStage.nowLevelType == LevelType.LV2)
                     game.sounds.Play("FOH_Landscapes_Other_013 " + LocalizationManager.CurrentLanguage, game.NAVI);
                 else if (game.FohStage.nowLevelType == LevelType.LV3)
+                {
+                    congratulations.SetActive(true);
                     game.sounds.Play("FOH_OTH_ETC_05 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                }
+                
             }
             else
             {
