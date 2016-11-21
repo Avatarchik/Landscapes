@@ -50,9 +50,7 @@ public class FOHStage
         ms += FOHTime.globalDeltaTime;
 
         if (mediaPlayer == null)
-            return;
-
- 
+            return; 
 
         if (mediaPlayer.Control.IsFinished())
         {
@@ -203,8 +201,7 @@ public class FOHStage
             score2 = 1;
         else
             score2 = 0;
-
-        // return data.surveyPoint + score1 + score2;
+  
         return data.surveyPoint + score1 + score2;
     }
 
@@ -215,7 +212,7 @@ public class FOHStage
         else if (score >= 3)
             data.star = 2;
         else
-            data.star = 1;
+            data.star = 1;  
     }
 
     public int GetStar()
