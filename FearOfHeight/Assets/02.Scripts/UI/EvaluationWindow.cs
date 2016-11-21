@@ -9,10 +9,18 @@ public class EvaluationWindow : FOHUIWindow
     private GameObject resultWindow;
 
     [SerializeField]
-    private GameObject nextLevelButton;
+    private GameObject tryAgainButton;
 
     [SerializeField]
+    private GameObject selectLocationButton;
+
+    [SerializeField]
+    private GameObject nextLevelButton;
+
+    /*
+    [SerializeField]
     private GameObject nextLockButton;
+    */
 
     [SerializeField]
     private GameObject[] stars;
@@ -50,13 +58,17 @@ public class EvaluationWindow : FOHUIWindow
             if (game.FohStage.IsFinal())
             {
                 nextLevelButton.SetActive(false);
-                nextLockButton.SetActive(false);
+                // nextLockButton.SetActive(false);
+                tryAgainButton.transform.DOLocalMoveX(-175f, 0f);
+                selectLocationButton.transform.DOLocalMoveX(175f, 0f);
             }
 
             else
             {
                 nextLevelButton.SetActive(false);
-                nextLockButton.SetActive(true);
+                tryAgainButton.transform.DOLocalMoveX(-175f, 0f);
+                selectLocationButton.transform.DOLocalMoveX(175f, 0f);
+                // nextLockButton.SetActive(true);
             }
         }
         else
@@ -64,12 +76,17 @@ public class EvaluationWindow : FOHUIWindow
             if (game.FohStage.IsFinal())
             {
                 nextLevelButton.SetActive(false);
-                nextLockButton.SetActive(false);
+                tryAgainButton.transform.DOLocalMoveX(-175f, 0f);
+                selectLocationButton.transform.DOLocalMoveX(175f, 0f);
+                // nextLockButton.SetActive(false);
             }
             else
             {
                 nextLevelButton.SetActive(true);
-                nextLockButton.SetActive(false);
+                tryAgainButton.transform.DOLocalMoveX(-350f, 0f);
+                nextLevelButton.transform.DOLocalMoveX(0f, 0f);
+                selectLocationButton.transform.DOLocalMoveX(350f, 0f);
+                // nextLockButton.SetActive(false);
             }
 
             if (game.account.TryUnlock(new FOHAccount.GameDataKey(game.FohStage.nowStageType, game.FohStage.nowLevelType)))
