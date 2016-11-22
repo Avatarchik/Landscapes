@@ -28,7 +28,8 @@ public class FOHSceneManager : FOHBehavior
     public FOHUIWindow ui { private set; get; }
     public OVRCameraRig ovr { private set; get; }
 
-    private SceneState NextScene;
+    public static SceneState currentSceneState = SceneState.Loading;
+    private SceneState nextSceneState;
 
     protected override void Awake()
     {
@@ -69,14 +70,16 @@ public class FOHSceneManager : FOHBehavior
 
     public void SetState(SceneState state)
     {
-        NextScene = state;
+        nextSceneState = state;
         ExitState();
     }
 
     private void EnterState()
     {
-        switch (NextScene)
-        {
+        currentSceneState = nextSceneState;
+
+        switch (nextSceneState)
+        {            
             case SceneState.StageSelect:
                 SceneManager.LoadScene("StageSelect");
                 return;

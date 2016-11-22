@@ -9,7 +9,8 @@ public class FOHPlayScene : FOHSceneManager
     protected override void Init()
     {
         base.Init();
-
+        OVRManager.cpuLevel = 0;
+        OVRManager.gpuLevel = 2;
         game.FohStage.Init();
         game.FohStage.Reset();
         game.FohStage.LoadMovie();
@@ -64,10 +65,14 @@ public class FOHPlayScene : FOHSceneManager
                     return;
                 if (game.account.useSelfEvaluation)
                 {
+                    OVRManager.cpuLevel = 0;
+                    OVRManager.gpuLevel = 1;
                     SetState(SceneState.Survey);
                 }
                 else
                 {
+                    OVRManager.cpuLevel = 0;
+                    OVRManager.gpuLevel = 1;
                     game.FohStage.SetStar(game.FohStage.CalculateScore(0.1f, 0.1f, 0.8f));
                     SetState(SceneState.Evaluation);
                 }

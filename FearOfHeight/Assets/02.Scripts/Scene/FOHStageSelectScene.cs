@@ -13,8 +13,6 @@ public class FOHStageSelectScene : FSMBase
         base.Awake();
         game.SetScene(this);
         ui = FindObjectOfType<FOHUIActionManager>();
-        OVRManager.cpuLevel = 0;
-        OVRManager.gpuLevel = 2;
     }
 
     private void Start()
@@ -74,6 +72,8 @@ public class FOHStageSelectScene : FSMBase
 
     private IEnumerator StageSelectEnterState()
     {
+        OVRManager.cpuLevel = 0;
+        OVRManager.gpuLevel = 2;
         game.blink.FadeOut();
         game.background.bGMesh.SetActive(true);
         game.background.bGFadeMesh.SetActive(false);
@@ -86,6 +86,8 @@ public class FOHStageSelectScene : FSMBase
 
     private IEnumerator StageSelectExitState()
     {
+        OVRManager.cpuLevel = 0;
+        OVRManager.gpuLevel = 1;
         game.blink.FadeIn();
         yield break;
     }
