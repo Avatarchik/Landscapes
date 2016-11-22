@@ -31,12 +31,15 @@ public class EvaluationWindow : FOHUIWindow
     [SerializeField]
     private GameObject congratulations;
 
+    [SerializeField]
+    private GameObject congratulations_SuspensionBridge;
+
     public override void Init()
     {
         base.Init();
 
         congratulations.SetActive(false);
-
+        congratulations_SuspensionBridge.SetActive(false);
         game.background.bGMeshRenderer.material =
         game.contents.GetPanoramaMaterial(new FOHAccount.GameDataKey(game.FohStage.nowStageType,
             game.FohStage.nowLevelType));
@@ -111,6 +114,19 @@ public class EvaluationWindow : FOHUIWindow
                 {
                     congratulations.SetActive(true);
                     game.sounds.Play("FOH_OTH_ETC_05 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                }
+
+                else if (game.FohStage.nowLevelType == LevelType.LV4)
+                {
+                    game.sounds.Play("FOH_OTH_ETC_07 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                    return;
+                }
+
+                else if (game.FohStage.nowLevelType == LevelType.LV5)
+                {
+                    congratulations_SuspensionBridge.SetActive(true);
+                    game.sounds.Play("FOH_Landscapes_Suspension Bridge_002 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                    return;
                 }
                 
             }
