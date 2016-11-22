@@ -48,6 +48,8 @@ public class FOH3DSoundManager : FOHBehavior
             listener.transform.SetParent(null);
             gameObject.SetActive(false);
             effects.SetActive(false);
+            game.FohStage.mediaPlayer.m_StereoPacking = StereoPacking.None;
+            avMesh.material.SetFloat("Stereo", 0);
             return;
         }
 

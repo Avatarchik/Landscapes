@@ -26,6 +26,11 @@ public class OptionWindow : FOHUIWindow
     public override void Active()
     {
         base.Active();
+        InitOptionButton();
+    }
+
+    void InitOptionButton()
+    {
         if (game.account.useGearS2)
         {
             GearSOnButton.transform.GetChild(0).GetComponent<Image>().enabled = true;
@@ -134,6 +139,7 @@ public class OptionWindow : FOHUIWindow
     public void Btn_ResetYes_Click()
     {
         Option.SetActive(true);
+        InitOptionButton();
         PopUp.SetActive(false);
         game.account.historyDatas.Clear();
     }
@@ -141,6 +147,7 @@ public class OptionWindow : FOHUIWindow
     public void Btn_ResetNo_Click()
     {
         Option.SetActive(true);
+        InitOptionButton();
         PopUp.SetActive(false);
     }
 }
