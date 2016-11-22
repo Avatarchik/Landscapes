@@ -13,9 +13,9 @@ public class DownloadWindow : FOHUIWindow
     public EnergyBar currentProgressBar;
     public EnergyBar totalProgressBar;
 
-    public GameObject[] comments;
-    private Image[] commentsImage = new Image[10];
-    private int commentCnt;
+    // public GameObject[] comments;
+    // private Image[] commentsImage = new Image[10];
+    // private int commentCnt;
 
     public GameObject[] photos;
     private Image[] photosImage = new Image[10];
@@ -37,7 +37,7 @@ public class DownloadWindow : FOHUIWindow
     private bool downloading = false;
 
     #region Tween
-
+    /*
     public void TweenComment()
     {
         comments[commentCnt].SetActive(true);
@@ -59,14 +59,14 @@ public class DownloadWindow : FOHUIWindow
             TweenComment();
         }
     }
-
+    */
     #endregion
 
     public override void Init()
     {
         for (int i = 0; i < 10; i++)
         {
-            commentsImage[i] = comments[i].GetComponent<Image>();
+            // commentsImage[i] = comments[i].GetComponent<Image>();
             photosImage[i] = photos[i].GetComponent<Image>();
             photos[i].transform.DOLocalMoveX(1200f, 0f);
             photosImage[i].DOFade(0f, 0f);
@@ -77,14 +77,14 @@ public class DownloadWindow : FOHUIWindow
     {
         for (int i = 0; i < 10; i++)
         {
-            comments[i].SetActive(false);
+            // comments[i].SetActive(false);
             photos[i].SetActive(false);
         }
 
-        commentCnt = 0;
+        // commentCnt = 0;
         photoCnt = 0;
 
-        TweenComment();
+        // TweenComment();
 
         CheckRequierFile();
 

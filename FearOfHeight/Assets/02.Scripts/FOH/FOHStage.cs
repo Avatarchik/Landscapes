@@ -178,14 +178,9 @@ public class FOHStage
 
     public int CalculateScore(float ratio1, float ratio2, float ratio3)
     {
-        float gazeScore = (data.gazeTime / (ms / 1000.0f)) * 100.0f;        
+        float gazeScore = (data.gazeTime / (ms / 1000.0f)) * 100.0f;
         data.gazeScore = gazeScore;
-        float hbrScore = 100.0f;
-        if (game.gearS.IsConnected())
-        {
-            hbrScore = (((hbrTotal / hbrCount) - game.account.baseLine) / game.account.baseLine) * 100.0f;
-            data.hbr = hbrTotal / hbrCount;
-        }
+
         int score1 = 0;
         if (gazeScore > 80.0f)
             score1 = 2;
@@ -194,25 +189,67 @@ public class FOHStage
         else
             score1 = 0;
 
+        float hbrScore = 100.0f;
         int score2 = 0;
-        if (hbrScore < 10.0f)
-            score2 = 2;
-        else if (hbrScore < 20.0f)
-            score2 = 1;
+
+        if (game.gearS.IsConnected() && game.account.useGearS2)
+        {
+            hbrScore = (((hbrTotal / hbrCount) - game.account.baseLine) / game.account.baseLine) * 100.0f;
+            data.hbr = hbrTotal / hbrCount;
+
+            if (hbrScore < 10.0f)
+                score2 = 2;
+            else if (hbrScore < 20.0f)
+                score2 = 1;
+            else
+                score2 = 0;
+        }
+
         else
+        {
             score2 = 0;
-  
-        return data.surveyPoint + score1 + score2;
+        }
+
+        // Final Score
+        if (game.account.useSelfEvaluation)
+        {
+            if (game.account.useGearS2 && game.gearS.IsConnected())
+            {
+                return (int)(data.surveyPoint * 0.8f + score1 * 0.1f + score2 * 0.1f);
+            }
+            else
+            {
+                return (int)(data.surveyPoint * 0.8f + score1 * 0.2f);
+            }
+        }
+        else
+        {
+            if (game.account.useGearS2 && game.gearS.IsConnected())
+            {
+                return (int)(score1 * 0.5f + score2 * 0.5f);
+            }
+            else
+            {
+                return (int)(score1);
+            }
+        }
     }
 
     public void SetStar(int score)
     {
-        if (score >= 5)
-            data.star = 3;
-        else if (score >= 3)
-            data.star = 2;
-        else
-            data.star = 1;  
+        Debug.Log(score);
+        switch (score)
+        {
+            case 0:
+                data.star = 1;
+                break;
+            case 1:
+                data.star = 2;
+                break;
+            case 2:
+                data.star = 3;
+                break;
+        }
     }
 
     public int GetStar()
