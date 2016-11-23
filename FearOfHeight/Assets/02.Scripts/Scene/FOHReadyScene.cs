@@ -158,7 +158,7 @@ public class FOHReadyScene : FSMBase
 
     private IEnumerator DownloadEnterState()
     {
-        OVRManager.cpuLevel = 1;
+        OVRManager.cpuLevel = 1;       
         game.blink.FadeOut();
         game.background.BackgroundSplash();
         game.ui.ChangeWindow(FOHWindowType.Download);
