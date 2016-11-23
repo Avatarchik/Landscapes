@@ -76,7 +76,6 @@ public class FOHStageSelectScene : FSMBase
         OVRManager.gpuLevel = 2;
         game.blink.FadeOut();
         game.background.bGMesh.SetActive(true);
-        game.background.bGFadeMesh.SetActive(false);
         game.FohStage.Reset();
 
         game.ui.ChangeWindow(FOHWindowType.StageSelect);
@@ -88,6 +87,7 @@ public class FOHStageSelectScene : FSMBase
     {
         OVRManager.cpuLevel = 0;
         OVRManager.gpuLevel = 1;
+        game.background.blackScreen.SetActive(false);
         game.blink.FadeIn();
         yield break;
     }
