@@ -61,12 +61,13 @@ public class FOHStage
                 return;
             }
 
-           RecordNowData();
+            RecordNowData();
         }
     }
 
     public void RecordNowData()
     {
+        data.levelType = nowLevelType;
         data.baseLine = game.account.baseLine;
         string date = System.DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
         SetDate(date);
@@ -126,7 +127,7 @@ public class FOHStage
     public void SetLevel(LevelType type)
     {
         nowLevelType = type;
-        data.levelType = nowLevelType;
+//        data.levelType = nowLevelType;
     }
 
     public void LevelClear()
