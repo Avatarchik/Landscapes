@@ -19,20 +19,6 @@ public class FOHSetting : MonoBehaviour
     {
         m_SetLanguage = FindObjectOfType<SetLanguage>();
 
-#if UNITY_ANDROID && !UNITY_EDITOR
-        // S6
-	    if (SystemInfo.deviceModel.Contains("G920") || SystemInfo.deviceModel.Contains("G925") ||
-	        SystemInfo.deviceModel.Contains("G928"))
-	    {
-	        QualitySettings.SetQualityLevel(2);
-	    }
-
-        // Others
-	    else
-	    {
-            QualitySettings.SetQualityLevel(1);
-        }
-#endif
         if (languageType == LanguageType.Auto)
         {
             if (Application.systemLanguage == SystemLanguage.Korean)
