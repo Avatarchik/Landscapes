@@ -6,11 +6,35 @@ public class FOHPlayScene : FOHSceneManager
 {
     private FOH3DSoundManager soundManager;
 
+    public GameObject avMesh;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        avMesh.GetComponent<MeshRenderer>().enabled = false;
+    }
+
     protected override void Init()
     {
         base.Init();
-        OVRManager.cpuLevel = 0;
-        OVRManager.gpuLevel = 2;
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+        // S6
+	    if (SystemInfo.deviceModel.Contains("G920") || SystemInfo.deviceModel.Contains("G925") ||
+	        SystemInfo.deviceModel.Contains("G928") || SystemInfo.deviceModel.Contains("N920"))
+	    {
+	        OVRManager.cpuLevel = 0;
+            OVRManager.gpuLevel = 3;
+	    }       
+
+        // Others
+	    else
+	    {
+            OVRManager.cpuLevel = 0;
+            OVRManager.gpuLevel = 2;
+        }
+#endif
+
         game.FohStage.Init();
         game.FohStage.Reset();
         game.FohStage.LoadMovie();
@@ -50,12 +74,13 @@ public class FOHPlayScene : FOHSceneManager
         switch (et)
         {
             case MediaPlayerEvent.EventType.ReadyToPlay:
-                if(soundManager)
+                if (soundManager)
                     return;
                 soundManager = FindObjectOfType<FOH3DSoundManager>();
                 soundManager.Init();
                 break;
             case MediaPlayerEvent.EventType.FirstFrameReady:
+                avMesh.GetComponent<MeshRenderer>().enabled = true;
                 game.FohStage.Play();
                 game.blink.FadeOut();
                 break;

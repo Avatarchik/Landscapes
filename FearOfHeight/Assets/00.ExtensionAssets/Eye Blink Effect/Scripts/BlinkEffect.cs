@@ -308,7 +308,10 @@ namespace PostProcess
         {
             this.onFadeInComplete = null;
             this.onFadeOutComplete = onComplete;
-            state = State.FadingOut;
+            if (fadeOutDelay == 0)
+                state = State.FadingOut;
+            else
+                state = State.WaitingForFadeOut;
             inAndOut = false;
             fadeOutTime = fadeOutCurve[fadeOutCurve.length - 1].time;
             time = 1f;

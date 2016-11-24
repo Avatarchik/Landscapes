@@ -44,6 +44,19 @@ public class FOHSetting : MonoBehaviour
             m_SetLanguage._Language = "Kor";
             m_SetLanguage.ApplyLanguage();
         }
+    }
 
+    void FixedUpdate()
+    {
+        if (OVRManager.isPowerSavingActive)
+        {
+            OVRPlugin.vsyncCount = 2;
+            return;
+        }
+
+        if (OVRPlugin.vsyncCount == 1)
+            return;
+
+        OVRPlugin.vsyncCount = 1;
     }
 }

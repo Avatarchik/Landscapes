@@ -51,8 +51,12 @@ public class FOHSceneManager : FOHBehavior
         ui = FindObjectOfType < FOHUIWindow>();
         if(ui)
             ui.Init();
-//        InputTracking.Recenter();
-        game.blink.FadeOut();
+
+        if (currentSceneState != SceneState.Play)
+        {
+            print("abcd");
+            game.blink.FadeOut();
+        }
     }
 
     protected virtual void Update()
@@ -77,7 +81,6 @@ public class FOHSceneManager : FOHBehavior
     private void EnterState()
     {
         currentSceneState = nextSceneState;
-
         switch (nextSceneState)
         {            
             case SceneState.StageSelect:

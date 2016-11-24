@@ -117,6 +117,7 @@ public class FOHStageSelectScene : FSMBase
     private void ChangeToPlayScene()
     {
         game.disableAllButton = false;
+        FOHSceneManager.currentSceneState = SceneState.Play;
         SceneManager.LoadScene("Play");
     }
     #endregion
