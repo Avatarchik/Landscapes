@@ -85,9 +85,9 @@ namespace I2.Loc
 				LanguageSource.DeserializeFullTerm( Term, out data.Term, out data.Category );
 				mParsedCategories[data.Category]=1;
 				mParsedTerms[Term] = data;
-				mShowableTerms.Clear();
-			}
-			return data;
+                ScheduleUpdateTermsToShowInList();
+            }
+            return data;
 		}
 
 		public static void RemoveParsedTerm( string Term )
@@ -162,7 +162,7 @@ namespace I2.Loc
                 mSelectedCategories.Clear();
                 foreach (var kvp in mParsedCategories)
                     mSelectedCategories.Add(kvp.Key);
-				mShowableTerms.Clear ();
+                ScheduleUpdateTermsToShowInList();
             }
             else
             {
@@ -172,8 +172,8 @@ namespace I2.Loc
                     if (!sourceCategories.Contains(kvp.Key))
 					{
                         mSelectedCategories.Add(kvp.Key);
-						mShowableTerms.Clear ();
-					}
+                        ScheduleUpdateTermsToShowInList();
+                    }
             }
 
 			if (OpenTermsTab) 
@@ -212,8 +212,9 @@ namespace I2.Loc
 
 		static void FindTermsNotUsed()
 		{
-			// every Term that is in the DB but not in mParsedTerms
-
+            // every Term that is in the DB but not in mParsedTerms
+            if (mLanguageSource == null)
+                return;
 			foreach (TermData termData in mLanguageSource.mTerms)
 				GetParsedTerm(termData.Term);	// this will create the ParsedTerm if it doesn't exist
 		}

@@ -85,9 +85,10 @@ namespace I2
 					EditorApplication.update -= CheckConectionResult;
 					if (string.IsNullOrEmpty(wwwPluginData.error))
 					{
-						if (DeserializeData(wwwPluginData.text))
-						{
-							I2AboutWindow.DownloadedData = wwwPluginData.text;
+                        var text = System.Text.Encoding.UTF8.GetString(wwwPluginData.bytes); // wwwPluginData.text
+                        if (DeserializeData(text))
+                        {
+                            I2AboutWindow.DownloadedData = text;
 						}
 					}
 					else

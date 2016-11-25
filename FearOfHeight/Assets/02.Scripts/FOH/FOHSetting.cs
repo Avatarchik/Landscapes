@@ -13,36 +13,29 @@ public class FOHSetting : MonoBehaviour
 
     public LanguageType languageType;
 
-    private I2.Loc.SetLanguage m_SetLanguage;
-
     void Awake()
     {
-        m_SetLanguage = FindObjectOfType<SetLanguage>();
-
         if (languageType == LanguageType.Auto)
         {
-            if (Application.systemLanguage == SystemLanguage.Korean)
+            switch (Application.systemLanguage)
             {
-                m_SetLanguage._Language = "Kor";
-                m_SetLanguage.ApplyLanguage();
-            }
-            else
-            {
-                m_SetLanguage._Language = "Eng";
-                m_SetLanguage.ApplyLanguage();
+                case SystemLanguage.Korean:
+                    LocalizationManager.CurrentLanguage = "Korean";
+                    break;
+                case SystemLanguage.English:
+                    LocalizationManager.CurrentLanguage = "English";
+                    break;
             }
         }
 
-        else if (languageType == LanguageType.English)
+        switch (languageType)
         {
-            m_SetLanguage._Language = "Eng";
-            m_SetLanguage.ApplyLanguage();
-        }
-
-        else if (languageType == LanguageType.Korean)
-        {
-            m_SetLanguage._Language = "Kor";
-            m_SetLanguage.ApplyLanguage();
+            case LanguageType.Korean:
+                LocalizationManager.CurrentLanguage = "Korean";
+                break;
+            case LanguageType.English:
+                LocalizationManager.CurrentLanguage = "English";
+                break;
         }
     }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Linq;
+using System.Globalization;
 
 namespace I2.Loc
 {
@@ -22,7 +23,7 @@ namespace I2.Loc
 					SetLanguageAndCode( SupportedLanguage, GetLanguageCode(SupportedLanguage));
 				}
 			}
-		}        
+		}
 		public static string CurrentLanguageCode
 		{
 			get { 
@@ -112,13 +113,34 @@ namespace I2.Loc
 					PlayerPrefs.SetString ("I2 Language", LanguageName);
 				mCurrentLanguage = LanguageName;
 				mLanguageCode = LanguageCode;
-				IsRight2Left = IsRTL (mLanguageCode);
-				LocalizeAll(Force);
+                #if NETFX_CORE
+                    IsRight2Left = IsRTL (mLanguageCode);
+                #else
+                    System.Threading.Thread.CurrentThread.CurrentCulture = GetCulture(LanguageCode);
+                    IsRight2Left = CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;  //IsRTL (mLanguageCode);
+                #endif
+                LocalizeAll(Force);
 			}
 		}
 
+        static CultureInfo GetCulture( string code )
+        {
+            #if !NETFX_CORE
+                try
+                {
+                    return System.Globalization.CultureInfo.CreateSpecificCulture(code);
+                }
+                catch(System.Exception)
+                {
+                    return CultureInfo.InvariantCulture;
+                }
+            #else
+                return CultureInfo.InvariantCulture;
+            #endif
+        }
 
-		static void SelectStartupLanguage()
+
+        static void SelectStartupLanguage()
 		{
 			// Use the system language if there is a source with that language, 
 			// or pick any of the languages provided by the sources
@@ -155,9 +177,9 @@ namespace I2.Loc
 				}
 		}
 
-		#endregion
+#endregion
 
-		#region Variables: Misc
+#region Variables: Misc
 
 		//public static Dictionary<string, string> Terms = new Dictionary<string, string>();
 		public static List<LanguageSource> Sources = new List<LanguageSource>();
@@ -167,24 +189,25 @@ namespace I2.Loc
 		public static event OnLocalizeCallback OnLocalizeEvent;
 
         public static List<ILocalizationParamsManager> ParamManagers = new List<ILocalizationParamsManager>();
-		#endregion
+#endregion
 
-		#region Localization
+#region Localization
 
-        public static string GetTermTranslation (string Term) { return GetTermTranslation (Term, LocalizationManager.IsRight2Left, 0); }
-		public static string GetTermTranslation (string Term, bool FixForRTL) { return GetTermTranslation (Term, FixForRTL, 0); }
-		public static string GetTermTranslation (string Term, bool FixForRTL, int maxLineLengthForRTL )
+        public static string GetTermTranslation (string Term) { return GetTermTranslation (Term, LocalizationManager.IsRight2Left, 0, false); }
+		public static string GetTermTranslation (string Term, bool FixForRTL) { return GetTermTranslation (Term, FixForRTL, 0, false); }
+        public static string GetTermTranslation(string Term, bool FixForRTL, int maxLineLengthForRTL) { return GetTermTranslation(Term, FixForRTL, maxLineLengthForRTL, false); }
+        public static string GetTermTranslation(string Term, bool FixForRTL, int maxLineLengthForRTL, bool ignoreRTLnumbers)
 		{
 			string Translation;
-			if (TryGetTermTranslation(Term, out Translation, FixForRTL, maxLineLengthForRTL))
+			if (TryGetTermTranslation(Term, out Translation, FixForRTL, maxLineLengthForRTL, ignoreRTLnumbers))
 				return Translation;
 
 			return string.Empty;
 		}
 
-		public static bool TryGetTermTranslation(string Term, out string Translation ) { return TryGetTermTranslation (Term, out Translation, false, 0); }
-		public static bool TryGetTermTranslation(string Term, out string Translation, bool FixForRTL ) { return TryGetTermTranslation (Term, out Translation, FixForRTL, 0); }
-		public static bool TryGetTermTranslation(string Term, out string Translation, bool FixForRTL, int maxLineLengthForRTL )
+		public static bool TryGetTermTranslation(string Term, out string Translation ) { return TryGetTermTranslation (Term, out Translation, false, 0, false); }
+		public static bool TryGetTermTranslation(string Term, out string Translation, bool FixForRTL ) { return TryGetTermTranslation (Term, out Translation, FixForRTL, 0, false); }
+		public static bool TryGetTermTranslation(string Term, out string Translation, bool FixForRTL, int maxLineLengthForRTL, bool ignoreRTLnumbers )
 		{
 			Translation = string.Empty;
             if (string.IsNullOrEmpty(Term))
@@ -196,26 +219,35 @@ namespace I2.Loc
 				if (Sources[i].TryGetTermTranslation (Term, out Translation))
 				{
 					if (LocalizationManager.IsRight2Left && FixForRTL)
-						Translation = ApplyRTLfix(Translation, maxLineLengthForRTL);
+						Translation = ApplyRTLfix(Translation, maxLineLengthForRTL, ignoreRTLnumbers);
                 	return true;
 				}
 
 			return false;
 		}
 
-		public static string ApplyRTLfix( string line ) { return ApplyRTLfix (line, 0); }
-		public static string ApplyRTLfix( string line, int maxCharacters )
+		public static string ApplyRTLfix( string line ) { return ApplyRTLfix (line, 0, false); }
+		public static string ApplyRTLfix( string line, int maxCharacters, bool ignoreNumbers )
 		{
             bool fixTags = true;
+            bool fixIgnoreRTL = true;
 
-            MatchCollection regexMatches = null;
+            MatchCollection regexMatches2 = null;
+            if (fixIgnoreRTL || ignoreNumbers)
+            {
+                var regex2 = new Regex( ignoreNumbers ? @"<ignoreRTL>(?<val>.*)<\/ignoreRTL>|(?<val>\d+)" : @"<ignoreRTL>(?<val>.*)<\/ignoreRTL>");
+                regexMatches2 = regex2.Matches(line);
+                line = regex2.Replace(line, "¬");
+            }
+
+            MatchCollection regexMatches1 = null;
             if (fixTags)
             {
                 var regex1 = new Regex(@"(?></?\w+)(?>(?:[^>'""]+|'[^']*'|""[^""]*"")*)>|\[.*?\]");
-                regexMatches = regex1.Matches(line);
+                regexMatches1 = regex1.Matches(line);
                 line = regex1.Replace(line, "¶");
-
             }
+
             if (maxCharacters <= 0)
             {
                 line = ArabicSupport.ArabicFixer.Fix(line);
@@ -224,10 +256,12 @@ namespace I2.Loc
             {
                 // Split into lines of maximum length
                 var regex = new Regex(".{0," + maxCharacters + "}(\\s+|$)", RegexOptions.Multiline);
+                line = line.Replace("\r\n", "\n");
                 line = regex.Replace(line, "$0\n");
 
-                if (line.EndsWith("\n\n"))
-                    line = line.Substring(0, line.Length - 2);
+                line = line.Replace("\n\n", "\n");
+                //if (line.EndsWith("\n\n"))
+                  //  line = line.Substring(0, line.Length - 2);
 
                 // Apply the RTL fix for each line
                 var lines = line.Split('\n');
@@ -237,24 +271,36 @@ namespace I2.Loc
             }
 
             // restore tags
-            if (fixTags && regexMatches!=null)
+            if (fixTags && regexMatches2 != null)
             {
-                int nMatches = regexMatches.Count;
+                int nMatches = regexMatches2.Count;
+                int idx = 0;
+                for (int i = nMatches-1; i>=0; --i)
+                {
+                    idx = line.IndexOf('¬', idx);
+                    line = line.Remove(idx, 1).Insert(idx, regexMatches2[i].Groups["val"].Value);
+                }
+            }
+
+            // restore ignoreRTL tags
+            if (fixTags && regexMatches1 != null)
+            {
+                int nMatches = regexMatches1.Count;
                 int idx = 0;
                 for (int i = 0; i < nMatches; ++i)
                 {
                     idx = line.IndexOf('¶', idx);
-                    line = line.Remove(idx, 1).Insert(idx, regexMatches[i].Value);
+                    line = line.Remove(idx, 1).Insert(idx, regexMatches1[i].Value);
                 }
 
             }
-			return line;
+            return line;
 		}
 
-		public static string FixRTL_IfNeeded(string text, int maxCharacters = 0)
+		public static string FixRTL_IfNeeded(string text, int maxCharacters = 0, bool ignoreNumber=false)
 		{
 			if (LocalizationManager.IsRight2Left)
-				return ApplyRTLfix(text, maxCharacters);
+				return ApplyRTLfix(text, maxCharacters, ignoreNumber);
 			else
 				return text;
 		}
@@ -315,9 +361,9 @@ namespace I2.Loc
             return null;
         }
 
-		#endregion
+#endregion
 
-		#region Sources
+#region Sources
 
 		public static bool UpdateSources()
 		{
@@ -364,13 +410,13 @@ namespace I2.Loc
 				return;
 
             Sources.Add( Source );
-			#if !UNITY_EDITOR
+#if !UNITY_EDITOR || I2LOC_AUTOSYNC_IN_EDITOR
 			Source.Import_Google_FromCache ();
 			if (Source.GoogleUpdateDelay > 0)
 					Source.Invoke ("Delayed_Import_Google", Source.GoogleUpdateDelay);
 			else
 					Source.Import_Google();
-			#endif
+#endif
 			if (Source.mDictionary.Count==0)
 				Source.UpdateDictionary(true);
 		}
@@ -518,7 +564,7 @@ namespace I2.Loc
 		}
         
 
-		#endregion
+#endregion
 
 		public static Object FindAsset (string value)
 		{
@@ -533,7 +579,7 @@ namespace I2.Loc
 
 		public static string GetVersion()
 		{
-			return "2.6.7 f6";
+			return "2.6.8 f4";
 		}
 
 		public static int GetRequiredWebServiceVersion()
@@ -541,7 +587,18 @@ namespace I2.Loc
 			return 4;
 		}
 
-		#region Left to Right Languages
+        public static string GetWebServiceURL( LanguageSource source = null )
+        {
+            if (source != null && !string.IsNullOrEmpty(source.Google_WebServiceURL))
+                return source.Google_WebServiceURL;
+
+            for (int i = 0; i < Sources.Count; ++i)
+                if (Sources[i] != null && !string.IsNullOrEmpty(Sources[i].Google_WebServiceURL))
+                    return Sources[i].Google_WebServiceURL;
+            return string.Empty;
+        }
+
+#region Left to Right Languages
 
 		static string[] LanguagesRTL = {"ar-DZ", "ar","ar-BH","ar-EG","ar-IQ","ar-JO","ar-KW","ar-LB","ar-LY","ar-MA","ar-OM","ar-QA","ar-SA","ar-SY","ar-TN","ar-AE","ar-YE",
 										"he","ur","ji"};
@@ -551,7 +608,7 @@ namespace I2.Loc
 			return System.Array.IndexOf(LanguagesRTL, Code)>=0;
 		}
 
-		#endregion
+#endregion
 
 #if UNITY_EDITOR
 		// This function should only be called from within the Localize Inspector to temporaly preview that Language

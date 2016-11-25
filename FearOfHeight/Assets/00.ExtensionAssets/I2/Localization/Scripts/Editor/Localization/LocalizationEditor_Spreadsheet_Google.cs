@@ -456,8 +456,8 @@ namespace I2.Loc
 			ParseTerms(true, !HasErrors);
 			mSelectedKeys.Clear ();
 			mSelectedCategories.Clear();
-			mShowableTerms.Clear ();
-			mLanguageSource.GetCategories(false, mSelectedCategories);
+            ScheduleUpdateTermsToShowInList();
+            mLanguageSource.GetCategories(false, mSelectedCategories);
 
 			UnityEditor.EditorUtility.SetDirty (target);
 			AssetDatabase.SaveAssets();
@@ -471,8 +471,10 @@ namespace I2.Loc
 				string Result = string.Empty;
 				string Error = mConnection_WWW.error;
 
-				if (string.IsNullOrEmpty(Error))
-					Result = mConnection_WWW.text;
+                if (string.IsNullOrEmpty(Error))
+                {
+                    Result = System.Text.Encoding.UTF8.GetString(mConnection_WWW.bytes); //mConnection_WWW.text;
+                }
 
 				StopConnectionWWW();
 				if (callback!=null)

@@ -83,13 +83,13 @@ namespace I2.Loc
 			{
 				if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL)
 				{
-					if (mTarget_uGUI_Text.alignment==TextAnchor.UpperLeft || mTarget_uGUI_Text.alignment==TextAnchor.UpperCenter || mTarget_uGUI_Text.alignment==TextAnchor.UpperRight)
+					if (mTarget_uGUI_Text.alignment==TextAnchor.UpperLeft || mTarget_uGUI_Text.alignment==TextAnchor.UpperRight)
 						mTarget_uGUI_Text.alignment = LocalizationManager.IsRight2Left ? TextAnchor.UpperRight : mOriginalAlignmentUGUI;
 					else
-					if (mTarget_uGUI_Text.alignment==TextAnchor.MiddleLeft || mTarget_uGUI_Text.alignment==TextAnchor.MiddleCenter || mTarget_uGUI_Text.alignment==TextAnchor.MiddleRight)
+					if (mTarget_uGUI_Text.alignment==TextAnchor.MiddleLeft  || mTarget_uGUI_Text.alignment==TextAnchor.MiddleRight)
 						mTarget_uGUI_Text.alignment = LocalizationManager.IsRight2Left ? TextAnchor.MiddleRight : mOriginalAlignmentUGUI;
 					else
-					if (mTarget_uGUI_Text.alignment==TextAnchor.LowerLeft || mTarget_uGUI_Text.alignment==TextAnchor.LowerCenter || mTarget_uGUI_Text.alignment==TextAnchor.LowerRight)
+					if (mTarget_uGUI_Text.alignment==TextAnchor.LowerLeft || mTarget_uGUI_Text.alignment==TextAnchor.LowerRight)
 						mTarget_uGUI_Text.alignment = LocalizationManager.IsRight2Left ? TextAnchor.LowerRight : mOriginalAlignmentUGUI;
 				}
 				

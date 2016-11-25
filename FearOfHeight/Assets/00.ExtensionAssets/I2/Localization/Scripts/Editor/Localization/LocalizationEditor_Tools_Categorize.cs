@@ -38,8 +38,8 @@ namespace I2.Loc
 			GUILayout.Label("Change Category of the following Terms:", EditorStyles.toolbarButton, GUILayout.ExpandWidth(true));
 
 			mScrollPos_CategorizedKeys = GUILayout.BeginScrollView( mScrollPos_CategorizedKeys, "AS TextArea", GUILayout.Height ( 100));
-			
-			if (mSelectedKeys.Count==0)
+
+    		if (mSelectedKeys.Count==0)
 			{
 				GUILayout.FlexibleSpace();
 
@@ -127,7 +127,7 @@ namespace I2.Loc
 
 		#endregion
 
-		#region Assinging Category
+		#region Assigning Category
 
 		public static Dictionary<string, string> TermReplacements = null;
 
@@ -179,10 +179,10 @@ namespace I2.Loc
 					mNewCategory = LanguageSource.EmptyCategory;
 				if (!mSelectedCategories.Contains(mNewCategory))
 					mSelectedCategories.Add (mNewCategory);
-				//RemoveUnusedCategoriesFromSelected();
-				mShowableTerms.Clear ();
-			}
-			TermReplacements = null;
+                //RemoveUnusedCategoriesFromSelected();
+                ScheduleUpdateTermsToShowInList();
+            }
+            TermReplacements = null;
 			mIsParsing = false;
 		}
 

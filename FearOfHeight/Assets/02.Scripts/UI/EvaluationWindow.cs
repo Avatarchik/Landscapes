@@ -60,7 +60,7 @@ public class EvaluationWindow : FOHUIWindow
         grades[index].transform.DOLocalMoveX(-700f, 1f).From();
 
         if(game.FohStage.GetData().star == 1)
-            game.sounds.Play("FOH_OTH_ETC_08 " + LocalizationManager.CurrentLanguage, game.NAVI);
+            game.sounds.Play("FOH_OTH_ETC_08 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
 
         if (game.account.GetHighScoreData(new FOHAccount.GameDataKey(game.FohStage.nowStageType, game.FohStage.nowLevelType)).star < 2)
         {
@@ -102,30 +102,30 @@ public class EvaluationWindow : FOHUIWindow
             {
                 if (game.FohStage.nowStageType == StageType.N_S5 && game.FohStage.nowLevelType == LevelType.LV3)
                 {
-                    game.sounds.Play("FOH_Landscapes_Other_015 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                    game.sounds.Play("FOH_Landscapes_Other_015 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
                     return;
                 }
 
                 if (game.FohStage.nowLevelType == LevelType.LV1 || game.FohStage.nowLevelType == LevelType.Intro)
-                    game.sounds.Play("FOH_Landscapes_Other_011 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                    game.sounds.Play("FOH_Landscapes_Other_011 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
                 else if (game.FohStage.nowLevelType == LevelType.LV2)
-                    game.sounds.Play("FOH_Landscapes_Other_013 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                    game.sounds.Play("FOH_Landscapes_Other_013 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
                 else if (game.FohStage.nowLevelType == LevelType.LV3)
                 {
                     congratulations.SetActive(true);
-                    game.sounds.Play("FOH_OTH_ETC_05 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                    game.sounds.Play("FOH_OTH_ETC_05 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
                 }
 
                 else if (game.FohStage.nowLevelType == LevelType.LV4)
                 {
-                    game.sounds.Play("FOH_OTH_ETC_07 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                    game.sounds.Play("FOH_OTH_ETC_07 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
                     return;
                 }
 
                 else if (game.FohStage.nowLevelType == LevelType.LV5)
                 {
                     congratulations_SuspensionBridge.SetActive(true);
-                    game.sounds.Play("FOH_Landscapes_Suspension Bridge_002 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                    game.sounds.Play("FOH_Landscapes_Suspension Bridge_002 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
                     return;
                 }
                 
@@ -134,13 +134,13 @@ public class EvaluationWindow : FOHUIWindow
             {
                 if (game.FohStage.GetData().star == 2)
                 {
-                    game.sounds.Play("FOH_OTH_ETC_07 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                    game.sounds.Play("FOH_OTH_ETC_07 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
                     return;
                 }
 
                 if (game.FohStage.GetData().star == 3)
                 {
-                    game.sounds.Play("FOH_OTH_ETC_06 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                    game.sounds.Play("FOH_OTH_ETC_06 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
                 }
             }
         }

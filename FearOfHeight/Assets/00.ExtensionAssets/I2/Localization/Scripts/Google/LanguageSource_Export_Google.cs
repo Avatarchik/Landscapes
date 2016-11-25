@@ -23,7 +23,8 @@ namespace I2.Loc
 			form.AddField("data", Data);
 			form.AddField("updateMode", UpdateMode.ToString());
 
-			WWW www = new WWW(Google_WebServiceURL, form);
+            
+			WWW www = new WWW(LocalizationManager.GetWebServiceURL(this), form);
 			return www;
 			#endif
 		}

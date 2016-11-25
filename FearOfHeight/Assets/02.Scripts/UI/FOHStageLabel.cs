@@ -20,11 +20,11 @@ public class FOHStageLabel : FOHBehavior
     private void FadeIn()
     {
         if (game.FohStage.nowLevelType == LevelType.LV1 || game.FohStage.nowLevelType == LevelType.Intro)
-            game.sounds.Play("FOH_Landscapes_Other_005 " + LocalizationManager.CurrentLanguage, game.NAVI);
+            game.sounds.Play("FOH_Landscapes_Other_005 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
         else if (game.FohStage.nowLevelType == LevelType.LV2)
-            game.sounds.Play("FOH_Landscapes_Other_006 " + LocalizationManager.CurrentLanguage, game.NAVI);
+            game.sounds.Play("FOH_Landscapes_Other_006 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
         else if (game.FohStage.nowLevelType == LevelType.LV3)
-            game.sounds.Play("FOH_Landscapes_Other_007 " + LocalizationManager.CurrentLanguage, game.NAVI);
+            game.sounds.Play("FOH_Landscapes_Other_007 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
 
         renderer.DOFade(1.0f, 3.0f).OnComplete(() =>
         {

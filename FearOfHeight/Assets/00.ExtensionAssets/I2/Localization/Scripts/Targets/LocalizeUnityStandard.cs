@@ -107,7 +107,7 @@ namespace I2.Loc
 			}
 			if (!string.IsNullOrEmpty(MainTranslation) && mTarget_GUIText.text != MainTranslation)
 			{
-				if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL)
+				if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL && mTarget_GUIText.alignment!=TextAlignment.Center)
 					mTarget_GUIText.alignment = LocalizationManager.IsRight2Left ? TextAlignment.Right : mOriginalAlignmentStd;
 				
 				mTarget_GUIText.text = MainTranslation;
@@ -132,7 +132,7 @@ namespace I2.Loc
 			}
 			if (!string.IsNullOrEmpty(MainTranslation) && mTarget_TextMesh.text != MainTranslation)
 			{
-				if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL)
+				if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL && mTarget_TextMesh.alignment!=TextAlignment.Center)
 					mTarget_TextMesh.alignment = LocalizationManager.IsRight2Left ? TextAlignment.Right : mOriginalAlignmentStd;
 
 				mTarget_TextMesh.text = MainTranslation;

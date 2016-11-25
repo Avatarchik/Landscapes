@@ -59,8 +59,10 @@ namespace I2.Loc
 		public bool AllowMainTermToBeRTL = false;	//	Whatever or not this localize should Fix the MainTranslation on Right To Left Languages
 		public bool AllowSecondTermToBeRTL = false; // Same for secondary Translation
 		public bool IgnoreRTL = false;	// If false, no Right To Left processing will be done
-		public int  MaxCharactersInRTL = 0; // If the language is RTL, the translation will be split in lines not longer than this amount and the RTL fix will be applied per line
-		public bool CorrectAlignmentForRTL = true;	// If true, when Right To Left language, alignment will be set to Right
+		public int  MaxCharactersInRTL = 0;     // If the language is RTL, the translation will be split in lines not longer than this amount and the RTL fix will be applied per line
+        public bool IgnoreNumbersInRTL = false; // If the language is RTL, the translation will not convert numbers (will preserve them like: e.g. 123)
+
+        public bool CorrectAlignmentForRTL = true;	// If true, when Right To Left language, alignment will be set to Right
 
 		#endregion
 
@@ -135,12 +137,14 @@ namespace I2.Loc
 				FindTarget();
 
 			if (!HasTargetCache()) return;
-
+			
 			// This are the terms actually used (will be mTerm/mSecondaryTerm or will get them from the objects if those are missing. e.g. Labels' text and font name)
 			if (string.IsNullOrEmpty(FinalTerm) || string.IsNullOrEmpty(FinalSecondaryTerm))
 				GetFinalTerms( out FinalTerm, out FinalSecondaryTerm );
 
-			if (string.IsNullOrEmpty (FinalTerm) && string.IsNullOrEmpty (FinalSecondaryTerm))
+			bool hasCallback = Application.isPlaying && LocalizeCallBack.HasCallback();
+
+			if (!hasCallback && string.IsNullOrEmpty (FinalTerm) && string.IsNullOrEmpty (FinalSecondaryTerm))
 				return;
 
 			CallBackTerm = FinalTerm;
@@ -148,7 +152,7 @@ namespace I2.Loc
 			MainTranslation = LocalizationManager.GetTermTranslation (FinalTerm, false);
 			SecondaryTranslation = LocalizationManager.GetTermTranslation (FinalSecondaryTerm, false);
 
-			if (string.IsNullOrEmpty (MainTranslation) && string.IsNullOrEmpty (SecondaryTranslation))
+			if (!hasCallback && string.IsNullOrEmpty (MainTranslation) && string.IsNullOrEmpty (SecondaryTranslation))
 				return;
 
 			CurrentLocalizeComponent = this;
@@ -161,7 +165,7 @@ namespace I2.Loc
 			if (LocalizationManager.IsRight2Left && !IgnoreRTL)
 			{
 				if (AllowMainTermToBeRTL && !string.IsNullOrEmpty(MainTranslation))   
-					MainTranslation = LocalizationManager.ApplyRTLfix(MainTranslation, MaxCharactersInRTL);
+					MainTranslation = LocalizationManager.ApplyRTLfix(MainTranslation, MaxCharactersInRTL, IgnoreNumbersInRTL);
 				if (AllowSecondTermToBeRTL && !string.IsNullOrEmpty(SecondaryTranslation)) 
 					SecondaryTranslation = LocalizationManager.ApplyRTLfix(SecondaryTranslation);
 			}
@@ -277,9 +281,14 @@ namespace I2.Loc
 
 			if (!string.IsNullOrEmpty(mTermSecondary))
 				SecondaryTerm = mTermSecondary;
-		}
 
-		public string GetMainTargetsText()
+            if (PrimaryTerm != null)
+                PrimaryTerm = PrimaryTerm.Trim();
+            if (SecondaryTerm != null)
+                SecondaryTerm = SecondaryTerm.Trim();
+        }
+
+        public string GetMainTargetsText()
 		{
 			string primary = null, secondary = null;
 			if (EventSetFinalTerms!=null)

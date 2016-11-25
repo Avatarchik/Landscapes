@@ -160,9 +160,9 @@ namespace I2.Loc
 						if (lanIdx < 0)
 								continue;
 						var value = Tokens[j+LanguagesStartIdx];
-						var isAuto = value.Contains("[i2auto]");
-						if (isAuto)
-							value = value.Replace ("[i2auto]", string.Empty);
+                        //var isAuto = false;// value.Contains("[i2auto]");
+						//if (isAuto)
+							//value = value.Replace ("[i2auto]", string.Empty);
 
 						//if (value=="-")
 						//	value = string.Empty;
@@ -170,14 +170,14 @@ namespace I2.Loc
 						if (isTouch)
 						{
 							termData.Languages_Touch[ lanIdx ] = value;
-							if (isAuto)  termData.Flags[lanIdx] |= (byte)TranslationFlag.AutoTranslated_Touch;
-									else termData.Flags[lanIdx] &= byte.MaxValue ^ ((byte)TranslationFlag.AutoTranslated_Touch);
+							/*if (isAuto)  termData.Flags[lanIdx] |= (byte)TranslationFlag.AutoTranslated_Touch;
+									else */termData.Flags[lanIdx] &= byte.MaxValue ^ ((byte)TranslationFlag.AutoTranslated_Touch);
 						}
 						else
 						{
 							termData.Languages[ lanIdx ] = value;
-							if (isAuto)  termData.Flags[lanIdx] |= (byte)TranslationFlag.AutoTranslated_Normal;
-									else termData.Flags[lanIdx] &= byte.MaxValue ^ ((byte)TranslationFlag.AutoTranslated_Normal);
+							/*if (isAuto)  termData.Flags[lanIdx] |= (byte)TranslationFlag.AutoTranslated_Normal;
+									else*/ termData.Flags[lanIdx] &= byte.MaxValue ^ ((byte)TranslationFlag.AutoTranslated_Normal);
 						}
 					}
 			}

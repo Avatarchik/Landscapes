@@ -21,7 +21,7 @@ namespace I2.Loc
 		public static bool CanTranslate ()
 		{
 			return (LocalizationManager.Sources.Count > 0 && 
-					!string.IsNullOrEmpty (LocalizationManager.Sources [0].Google_WebServiceURL));
+					!string.IsNullOrEmpty (LocalizationManager.GetWebServiceURL()));
 		}
 
 		#region Single Translation
@@ -78,11 +78,10 @@ namespace I2.Loc
 
 			// Google has problem translating this "This Is An Example"  but not this "this is an example"
 			// so I'm asking google with the lowercase version and then reverting back
-			if (TitleCase(text)==text)
+			if (TitleCase(text)==text && text.ToUpper()!=text)
 				text = text.ToLower();
 
-			//string url = string.Format ("http://www.google.com/translate_t?hl=en&vi=c&ie=UTF8&oe=UTF8&submit=Translate&langpair={0}|{1}&text={2}", LanguageCodeFrom, LanguageCodeTo, Uri.EscapeUriString( text ));
-			string url = string.Format("{0}?action=Translate&list={1}:{2}={3}", LocalizationManager.Sources[0].Google_WebServiceURL, LanguageCodeFrom, LanguageCodeTo, Uri.EscapeUriString( text ));
+			string url = string.Format("{0}?action=Translate&list={1}:{2}={3}", LocalizationManager.GetWebServiceURL(), LanguageCodeFrom, LanguageCodeTo, Uri.EscapeUriString( text ));
 			//Debug.Log (url);
 			WWW www = new WWW(url);
 			return www;
@@ -102,7 +101,7 @@ namespace I2.Loc
 				//	if (UppercaseFirst(OriginalText)==OriginalText)
 				//		Translation = UppercaseFirst(Translation);
 				//else
-					if (TitleCase(OriginalText)==OriginalText)   // Google has problem translating this "This Is An Example"  but not this "this is an example"
+					if (TitleCase(OriginalText)== OriginalText && OriginalText.ToUpper() != OriginalText)   // Google has problem translating this "This Is An Example"  but not this "this is an example"
 						Translation = TitleCase(Translation);
 
 				return Translation;
@@ -166,7 +165,7 @@ namespace I2.Loc
 		public static WWW GetTranslationWWW(  List<TranslationRequest> requests )
 		{
 			var sb = new StringBuilder ();
-			sb.Append (LocalizationManager.Sources [0].Google_WebServiceURL);
+			sb.Append (LocalizationManager.GetWebServiceURL());
 			sb.Append ("?action=Translate&list=");
 			bool first = true;
 			foreach (var request in requests)
@@ -257,7 +256,7 @@ namespace I2.Loc
 				return string.Empty;
 			}
 
-			//#if NETFX_CORE
+			#if NETFX_CORE
 			var sb = new StringBuilder(s);
 			sb[0] = char.ToUpper(sb[0]);
 			for (int i = 1, imax=s.Length; i<imax; ++i)
@@ -268,9 +267,9 @@ namespace I2.Loc
 					sb[i] = char.ToLower(sb[i]);
 			}
 			return sb.ToString();
-			/*#else
+			#else
 			return System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(s);
-			#endif*/
+			#endif
 		}
 	}
 }

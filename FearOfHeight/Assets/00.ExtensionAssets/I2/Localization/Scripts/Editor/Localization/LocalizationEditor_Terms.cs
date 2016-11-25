@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace I2.Loc
 {
@@ -11,7 +12,7 @@ namespace I2.Loc
 		Vector2 mScrollPos_Keys = Vector2.zero;
 		
 		public static string mKeyToExplore;  								// Key that should show all the language details
-		string KeyList_Filter = "";
+		static string KeyList_Filter = "";
 		float mRowSize=-1;
 		float ScrollHeight;
 		float mTermList_MaxWidth = -1;
@@ -55,9 +56,9 @@ namespace I2.Loc
 			mFlagsViewKeys = OnGUI_FlagToogle("Not Used", "Shows all Terms from the Source that are not been used", 	mFlagsViewKeys, (int)eFlagsViewKeys.NotUsed);
 			mFlagsViewKeys = OnGUI_FlagToogle("Missing","Shows all Terms Used but not defined in the Source", 			mFlagsViewKeys, (int)eFlagsViewKeys.Missing);
 			if (oldFlags!=mFlagsViewKeys)
-				mShowableTerms.Clear ();
+                ScheduleUpdateTermsToShowInList();
 
-			OnGUI_SelectedCategories();
+            OnGUI_SelectedCategories();
 
 			GUILayout.EndHorizontal();
 
@@ -166,15 +167,23 @@ namespace I2.Loc
 			//Debug.Log ("Draw: " + nDraw + " Skip: " + nSkip);
 		}
 
-		void UpdateTermsToShownInList()
+        static void ScheduleUpdateTermsToShowInList()
+        {
+            EditorApplication.update += UpdateTermsToShownInList;
+        }
+
+		static void UpdateTermsToShownInList()
 		{
-			mShowableTerms.Clear ();
+            EditorApplication.update -= UpdateTermsToShownInList;
+
+            mShowableTerms.Clear ();
 			foreach (KeyValuePair<string, ParsedTerm> kvp in mParsedTerms)
 			{
 				ParsedTerm parsedTerm = kvp.Value;
 				if (ShouldShowTerm (parsedTerm.Term, parsedTerm.Category, parsedTerm.Usage, parsedTerm))
 					mShowableTerms.Add(parsedTerm);
 			}
+            EditorApplication.RepaintHierarchyWindow();
 		}
 
 		void OnGUI_KeyHeader (string sKey, string sCategory, string FullKey, int nUses, float YPosMin)
@@ -194,9 +203,23 @@ namespace I2.Loc
 				}
 				else 
 				{
-					if (GUI.Button (new Rect(20, YPosMin+2, 30, mRowSize), nUses.ToString (), "toolbarbutton"))
-						SelectObjectsUsingKey (FullKey);
-				}
+                    if (GUI.Button(new Rect(20, YPosMin + 2, 30, mRowSize), nUses.ToString(), "toolbarbutton"))
+                    {
+                        List<string> selection = new List<string>(mSelectedKeys);
+                        if (!selection.Contains(FullKey))
+                            selection.Add(FullKey);
+
+                        List<GameObject> selGOs = new List<GameObject>();
+                        for (int i=0; i<selection.Count; ++i)
+                            selGOs.AddRange( FindObjectsUsingKey(selection[i]) );
+
+
+                        if (selGOs.Count > 0)
+                            Selection.objects = selGOs.ToArray();
+                        else
+                            ShowWarning("The selected Terms are not used in this Scene. Try opening other scenes");
+                    }
+                }
 			}
 			else 
 			{
@@ -442,8 +465,8 @@ namespace I2.Loc
 			return ShouldShowTerm (termData.Term, termData.Category, termData.Usage, termData);
 		}
 
-		private TermData ShowTerm_termData;
-		public bool ShouldShowTerm (string Term, string Category, int nUses, ParsedTerm parsedTerm=null )
+		private static TermData ShowTerm_termData;
+		public static bool ShouldShowTerm (string Term, string Category, int nUses, ParsedTerm parsedTerm=null )
 		{
 			if (!string.IsNullOrEmpty(Category) && !mSelectedCategories.Contains(Category)) 
 				return false;
@@ -475,7 +498,7 @@ namespace I2.Loc
 			return false;
 		}
 
-		bool StringContainsFilter( string Term, string Filter )
+		static bool StringContainsFilter( string Term, string Filter )
 		{
 			if (string.IsNullOrEmpty(Filter))
 				return true;
@@ -545,25 +568,7 @@ namespace I2.Loc
 
 		void SelectObjectsUsingKey( string Key )
 		{
-			List<GameObject> SelectedObjs = new List<GameObject>();
-			
-			Localize[] Locals = (Localize[])Resources.FindObjectsOfTypeAll(typeof(Localize));
-			
-			if (Locals==null)
-				return;
-			
-			for (int i=0, imax=Locals.Length; i<imax; ++i)
-			{
-				Localize localize = Locals[i];
-				if (localize==null || localize.gameObject==null || !GUITools.ObjectExistInScene(localize.gameObject))
-					continue;
-
-				string Term, SecondaryTerm;
-				localize.GetFinalTerms( out Term, out SecondaryTerm );
-
-				if (Key==Term || Key==SecondaryTerm)
-					SelectedObjs.Add (localize.gameObject);
-			}
+			List<GameObject> SelectedObjs = FindObjectsUsingKey(Key);
 
 			if (SelectedObjs.Count>0)
 				Selection.objects = SelectedObjs.ToArray();
@@ -571,7 +576,33 @@ namespace I2.Loc
 				ShowWarning("The selected Terms are not used in this Scene. Try opening other scenes"); 
 		}
 
-		#endregion
+        List<GameObject> FindObjectsUsingKey(string Key)
+        {
+            List<GameObject> SelectedObjs = new List<GameObject>();
 
-	}
+            Localize[] Locals = (Localize[])Resources.FindObjectsOfTypeAll(typeof(Localize));
+
+            if (Locals == null)
+                return SelectedObjs;
+
+            for (int i = 0, imax = Locals.Length; i < imax; ++i)
+            {
+                Localize localize = Locals[i];
+                if (localize == null || localize.gameObject == null || !GUITools.ObjectExistInScene(localize.gameObject))
+                    continue;
+
+                string Term, SecondaryTerm;
+                localize.GetFinalTerms(out Term, out SecondaryTerm);
+
+                if (Key == Term || Key == SecondaryTerm)
+                    SelectedObjs.Add(localize.gameObject);
+            }
+
+            return SelectedObjs;
+        }
+
+
+        #endregion
+
+    }
 }

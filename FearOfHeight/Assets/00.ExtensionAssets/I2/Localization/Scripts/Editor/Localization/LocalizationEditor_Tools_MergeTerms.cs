@@ -133,9 +133,9 @@ namespace I2.Loc
 				mNewCategory = LanguageSource.EmptyCategory;
 			if (!mSelectedCategories.Contains(mNewCategory))
 				mSelectedCategories.Add (mNewCategory);
-			//RemoveUnusedCategoriesFromSelected();
-			mShowableTerms.Clear ();
-			TermReplacements = null;
+            //RemoveUnusedCategoriesFromSelected();
+            ScheduleUpdateTermsToShowInList();
+            TermReplacements = null;
 			mIsParsing = false;
 		}
 
@@ -149,9 +149,9 @@ namespace I2.Loc
             if (mSelectedCategories.Count == 0)
                 mSelectedCategories.AddRange(Categories);
 
-			mShowableTerms.Clear ();
-		}
-		
-		#endregion
-	}
+            ScheduleUpdateTermsToShowInList();
+        }
+
+        #endregion
+    }
 }
