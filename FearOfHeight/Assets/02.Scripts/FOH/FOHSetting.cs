@@ -12,6 +12,7 @@ public class FOHSetting : MonoBehaviour
         Russian,
         Portuguese,
         Spanish,
+        Chinese,
         Auto
     }
 
@@ -41,6 +42,9 @@ public class FOHSetting : MonoBehaviour
                 case SystemLanguage.Spanish:
                     LocalizationManager.CurrentLanguage = "Spanish";
                     break;
+                case SystemLanguage.Chinese:
+                    LocalizationManager.CurrentLanguage = "Spanish";
+                    break;
             }
         }
 
@@ -62,6 +66,9 @@ public class FOHSetting : MonoBehaviour
                 LocalizationManager.CurrentLanguage = "Portuguese";
                 break;
             case LanguageType.Spanish:
+                LocalizationManager.CurrentLanguage = "Spanish";
+                break;
+            case LanguageType.Chinese:
                 LocalizationManager.CurrentLanguage = "Spanish";
                 break;
         }
