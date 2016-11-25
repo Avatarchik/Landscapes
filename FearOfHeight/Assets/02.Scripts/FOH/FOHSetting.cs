@@ -8,6 +8,10 @@ public class FOHSetting : MonoBehaviour
     {
         English,
         Korean,
+        German,
+        Russian,
+        Portuguese,
+        Spanish,
         Auto
     }
 
@@ -25,6 +29,18 @@ public class FOHSetting : MonoBehaviour
                 case SystemLanguage.English:
                     LocalizationManager.CurrentLanguage = "English";
                     break;
+                case SystemLanguage.German:
+                    LocalizationManager.CurrentLanguage = "German";
+                    break;
+                case SystemLanguage.Russian:
+                    LocalizationManager.CurrentLanguage = "Russian";
+                    break;
+                case SystemLanguage.Portuguese:
+                    LocalizationManager.CurrentLanguage = "Portuguese";
+                    break;
+                case SystemLanguage.Spanish:
+                    LocalizationManager.CurrentLanguage = "Spanish";
+                    break;
             }
         }
 
@@ -35,6 +51,18 @@ public class FOHSetting : MonoBehaviour
                 break;
             case LanguageType.English:
                 LocalizationManager.CurrentLanguage = "English";
+                break;
+            case LanguageType.German:
+                LocalizationManager.CurrentLanguage = "German";
+                break;
+            case LanguageType.Russian:
+                LocalizationManager.CurrentLanguage = "Russian";
+                break;
+            case LanguageType.Portuguese:
+                LocalizationManager.CurrentLanguage = "Portuguese";
+                break;
+            case LanguageType.Spanish:
+                LocalizationManager.CurrentLanguage = "Spanish";
                 break;
         }
     }
