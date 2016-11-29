@@ -18,6 +18,7 @@ public enum FOHWindowType
     OtherResults,
     Result,
     HeightSimulator,
+    Error,
     Max   
 }
 

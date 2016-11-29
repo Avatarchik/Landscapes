@@ -19,6 +19,7 @@ public enum SceneState
     Download,
     Option,
     OtherResults,
+    Error,
     Result,
 }
 
