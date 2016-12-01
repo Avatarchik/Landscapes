@@ -24,7 +24,7 @@ public class PlayWindow : FOHUIWindow
                 {
                     print("dd");
                     fallReady = true;
-                    game.sounds.Play("FOH_Landscapes_Other_002 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                    game.sounds.Play("FOH_Landscapes_Other_002 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
                 }
             }
 
@@ -34,7 +34,7 @@ public class PlayWindow : FOHUIWindow
                 {
                     print("dd");
                     fallReady = true;
-                    game.sounds.Play("FOH_Landscapes_Other_002 " + LocalizationManager.CurrentLanguage, game.NAVI);
+                    game.sounds.Play("FOH_Landscapes_Other_002 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
                 }
             }
         }

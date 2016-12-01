@@ -1,6 +1,6 @@
-----------------------------------------------
+﻿----------------------------------------------
               I2 Localization
-                  2.6.7 f6
+                  2.6.8 f4
         http://www.inter-illusion.com
           inter.illusion@gmail.com
 ----------------------------------------------
@@ -51,6 +51,28 @@ That will help with the sales and allow me to invest more time improving the plu
  Version History
 -----------------------
 
+2.6.8
+DEL: [i2auto] will not longer be used (if your spreadsheets have that, you should remove all [i2auto] texts and reimport to the LanguageSource)
+DEL: Translations will not longer be marked as translated by google (this speed the import/export process)
+NEW: When a term is not defined for some language, it can be set to display (Empty, Fallback or a Warning) The setting is in I2Languages.prefab Language Tab
+NEW: Localize components will execute the Localization Callback even without a valid Translated Term.
+NEW: When creating a term in the Localize component, the first language (e.g. English) will be auto-filled with the label's text
+NEW: Added two more parameters to the callback when Import_Google finishes (Event_OnSourceUpdateFromGoogle(LanguageSource, bool ReceivedNewData, string errorMsg))
+NEW: Selecting the checkbox next to the Term's list in the LanguageSource and then clicking the Term Usage button selects ALL objects using all the selected terms
+NEW: Surrounding a text with the tag <ignoreRTL>, ignores converting it to RTL  (e.g. "<ignoreRTL>2<ignoreRTL>. بدفع مبلغ")
+NEW: New toggle (Ignore Numbers), next to the Max Line Length in the localize component, to automatically avoid converting numbers when parsing RTL texts
+NEW: .NET CurrentCulture is changed based on the current language to make all culture-dependant operations to use the properties of the selected language
+NEW: Detecting if the language is Right-To-Left will now be using the CurrentCulture settings as that maybe more precise
+FIX: Right-To-Left languages will not adjust the alignment if the original alignment was CENTER
+FIX: 2DToolkit now allows adjusting the alignment if the language is RTL
+FIX: Add/Remove language was not marking the LanguageSource as dirty and the changes could have been getting lost
+FIX: Copy/Paste a Localize component into a new GameObject will properly update the Target reference
+FIX: If the WebService was set in a LanguageSource inside the scene and not in the I2Languages.prefab, Google Translate/Export/Import wasn't working.
+FIX: Compile erors when using an old version of TextMeshPro (requiring TextMeshPro_Pre53)
+FIX: Texts for Right-To-Left languages containing multiple lines was showing extra lines when using \r\n for new lines
+FIX: LanguageSource.Import_Google was not executing when Auto-Update was set to NEVER  (even if ForceUpdate was true)
+FIX: Accessing www.text was returning an Encoding error in the latest patch releases (5.4.1p3 and 5.3.5p7)
+
 2.6.7
 NEW: SpriteRenderer can now be localized
 NEW: Translations can have Parameters (e.g. "The winner is {[WINNER}]") and at runtime the tag is replaced by its value by using a local or global parameter
@@ -76,7 +98,6 @@ FIX: Renamed button at the bottom of the terms description to make it more under
 FIX: When clicking that Merge button, the current term is automatically selected as the term to rename
 FIX: Exporting a csv file with auto-translated terms containing (,) was generating extra columns with "[i2auto]".
 FIX: ParseTerms in scripts was not detecting the term when the function had spaces (e.g. ScriptLocalization.Get ( "term" ))
-FIX: Add/Remove language was not marking the LanguageSource as dirty and the changes could have been getting lost
 
 2.6.6
 NEW: Allow multiple Localize component in the same object

@@ -64,8 +64,8 @@ namespace I2.Loc
 			mTermList_MaxWidth = -1;			
 			serializedObject.ApplyModifiedProperties();
 			EditorUtility.SetDirty(mLanguageSource);
-			mShowableTerms.Clear ();
-		}
+            ScheduleUpdateTermsToShowInList();
+        }
 		
 		void DeleteCurrentKey()
 		{
@@ -89,9 +89,9 @@ namespace I2.Loc
 				if (!mSelectedCategories.Contains(sCategory))
 				{
 					mSelectedCategories.Add(sCategory);
-					mShowableTerms.Clear ();
-				}
-			}
+                    ScheduleUpdateTermsToShowInList();
+                }
+            }
 			mTermList_MaxWidth = -1;			
 			serializedObject.ApplyModifiedProperties();
 			EditorUtility.SetDirty(mLanguageSource);

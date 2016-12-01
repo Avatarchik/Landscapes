@@ -151,12 +151,15 @@ namespace I2.Loc
 		public bool UserAgreesToHaveItOnTheScene = false;
 		public bool UserAgreesToHaveItInsideThePluginsFolder = false;
 
-		#endregion
+        public enum MissingTranslationAction { Empty, Fallback, ShowWarning };
+        public MissingTranslationAction OnMissingTranslation = MissingTranslationAction.Fallback;
 
-		#region EditorVariables
-		#if UNITY_EDITOR
+        #endregion
 
-		public string Spreadsheet_LocalFileName;
+        #region EditorVariables
+#if UNITY_EDITOR
+
+        public string Spreadsheet_LocalFileName;
 		public string Spreadsheet_LocalCSVSeparator = ",";
 		public string Spreadsheet_LocalCSVEncoding = "Unicode (UTF-8)";
 
@@ -306,7 +309,6 @@ namespace I2.Loc
 				System.Array.Resize(ref mTerms[i].Languages_Touch, NewSize);
 				System.Array.Resize(ref mTerms[i].Flags, NewSize);
 			}
-
             #if UNITY_EDITOR
                 UnityEditor.EditorUtility.SetDirty(this);
             #endif
@@ -335,9 +337,9 @@ namespace I2.Loc
             #if UNITY_EDITOR
                 UnityEditor.EditorUtility.SetDirty(this);
             #endif
-		}
+        }
 
-		public List<string> GetLanguages()
+        public List<string> GetLanguages()
 		{
 			List<string> langs = new List<string>();
 			for (int i=0, imax=mLanguages.Count; i<imax; ++i)
@@ -347,15 +349,11 @@ namespace I2.Loc
 
 		public string GetTermTranslation (string term)
 		{
-			int Index = GetLanguageIndex(LocalizationManager.CurrentLanguage);
-			if (Index<0) 
-				return string.Empty;
+            string Translation;
+            if (TryGetTermTranslation(term, out Translation))
+                return Translation;
 
-			TermData data = GetTermData(term);
-			if (data!=null)
-					return data.GetTranslation(Index);
-
-			return string.Empty;
+            return string.Empty;
 		}
 
 		public bool TryGetTermTranslation (string term, out string Translation)
@@ -367,6 +365,24 @@ namespace I2.Loc
 				if (data!=null)
 				{
 					Translation = data.GetTranslation(Index);
+
+                    // Fallback to any other language with a valid translation
+                    if (string.IsNullOrEmpty(Translation))
+                    {
+                        if (OnMissingTranslation == MissingTranslationAction.ShowWarning)
+                            Translation = string.Format("<!-Missing Translation [{0}]-!>", term);
+                        else
+                        if (OnMissingTranslation == MissingTranslationAction.Fallback)
+                        {
+                            for (int i = 0; i < mLanguages.Count; ++i)
+                                if (i != Index)
+                                {
+                                    Translation = data.GetTranslation(i);
+                                    if (!string.IsNullOrEmpty(Translation))
+                                        return true;
+                                }
+                        }
+                    }
 					return true;
 				}
 			}

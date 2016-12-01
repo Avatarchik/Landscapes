@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using I2.Loc;
 
 public class FOHSounds
 {
@@ -10,13 +11,20 @@ public class FOHSounds
     {
         clip = new Dictionary<string, AudioClip>();
 
-        Object[] resource = Resources.LoadAll("Sounds");
+        Load("Sounds/" + LocalizationManager.CurrentLanguage);
+        Load("Sounds/Common");
+    }
+
+    private void Load(string path)
+    {
+        Object[] resource = Resources.LoadAll(path);
         for (int i = 0; i < resource.Length; i++)
         {
             AudioClip newClip = resource[i] as AudioClip;
             clip[newClip.name] = newClip;
         }
     }
+
     public AudioClip GetClip(string strSoundName)
     {
         AudioClip tmp;

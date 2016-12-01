@@ -19,7 +19,7 @@ namespace I2.Loc
 
 		public float GoogleUpdateDelay = 5; // How many second to delay downloading data from google (to avoid lag on the startup)
 
-		public event Action<LanguageSource> Event_OnSourceUpdateFromGoogle;
+		public event Action<LanguageSource, bool, string> Event_OnSourceUpdateFromGoogle;    // (LanguageSource, bool ReceivedNewData, string errorMsg)
 		
 		#endregion
 
@@ -84,7 +84,7 @@ namespace I2.Loc
 
 		public void Import_Google( bool ForceUpdate = false)
 		{
-			if (GoogleUpdateFrequency==eGoogleUpdateFrequency.Never)
+			if (!ForceUpdate && GoogleUpdateFrequency==eGoogleUpdateFrequency.Never)
 				return;
 
 			#if UNITY_EDITOR
@@ -141,23 +141,33 @@ namespace I2.Loc
 			while (!www.isDone)
 				yield return null;
 
-			//Debug.Log ("Google Evaluation: " + www.text);
-			if (string.IsNullOrEmpty(www.error) && www.text != "\"\"")
-			{
-				var errorMsg = Import_Google_Result(www.text, eSpreadsheetUpdateMode.Replace, true);
-				if (string.IsNullOrEmpty(errorMsg))
-				{
-					if (Event_OnSourceUpdateFromGoogle!=null)
-						Event_OnSourceUpdateFromGoogle(this);
+			//Debug.Log ("Google Result: " + www.text);
+            if (string.IsNullOrEmpty(www.error) && www.text != "\"\"")
+            {
+                var errorMsg = Import_Google_Result(www.text, eSpreadsheetUpdateMode.Replace, true);
+                if (string.IsNullOrEmpty(errorMsg))
+                {
+                    if (Event_OnSourceUpdateFromGoogle != null)
+                        Event_OnSourceUpdateFromGoogle(this, true, www.error);
 
-					LocalizationManager.LocalizeAll(true);
-					Debug.Log ("Done Google Sync");
-				}
-				else
-				    Debug.Log ("Done Google Sync: source was up-to-date");
-			}
-			else
-				Debug.Log ("Language Source was up-to-date with Google Spreadsheet");
+                    LocalizationManager.LocalizeAll(true);
+                    Debug.Log("Done Google Sync");
+                }
+                else
+                {
+                    if (Event_OnSourceUpdateFromGoogle != null)
+                        Event_OnSourceUpdateFromGoogle(this, false, www.error);
+
+                    Debug.Log("Done Google Sync: source was up-to-date");
+                }
+            }
+            else
+            {
+                if (Event_OnSourceUpdateFromGoogle != null)
+                    Event_OnSourceUpdateFromGoogle(this, false, www.error);
+
+                Debug.Log("Language Source was up-to-date with Google Spreadsheet");
+            }
 		}
 
 		public WWW Import_Google_CreateWWWcall( bool ForceUpdate = false )
@@ -178,7 +188,7 @@ namespace I2.Loc
 				Google_LastUpdatedVersion = savedVersion;
 
 			string query =  string.Format("{0}?key={1}&action=GetLanguageSource&version={2}", 
-			                              Google_WebServiceURL,
+			                              LocalizationManager.GetWebServiceURL(this),
 			                              Google_SpreadsheetKey,
 			                              ForceUpdate ? "0" : Google_LastUpdatedVersion);
 			WWW www = new WWW(query);
@@ -188,7 +198,7 @@ namespace I2.Loc
 
 		public bool HasGoogleSpreadsheet()
 		{
-			return !string.IsNullOrEmpty(Google_WebServiceURL) && !string.IsNullOrEmpty(Google_SpreadsheetKey);
+			return !string.IsNullOrEmpty(LocalizationManager.GetWebServiceURL(this)) && !string.IsNullOrEmpty(Google_SpreadsheetKey);
 		}
 
 		public string Import_Google_Result( string JsonString, eSpreadsheetUpdateMode UpdateMode, bool saveInPlayerPrefs = false )

@@ -9,6 +9,7 @@ public class LevelWrapper : FOHBehavior
     public StageType stage;
     public LevelType level;
     public GameObject levelButton { get; set; }
+    private float levelButtonYPos;
     private GameObject lockButton;
     private GameObject[] stars;
 
@@ -22,6 +23,7 @@ public class LevelWrapper : FOHBehavior
         base.Awake();
 
         levelButton = transform.GetChild(0).gameObject;
+        levelButtonYPos = levelButton.transform.localPosition.y;
 
         lockButton = transform.GetChild(1).gameObject;
         lockButton.SetActive(false);
@@ -77,14 +79,14 @@ public class LevelWrapper : FOHBehavior
             levelButton.SetActive(true);
             levelButton.GetComponent<Image>().enabled = true;
             levelButton.GetComponent<Image>().DOFade(100f / 255f, 0.2f * ((int)level + 1)).OnComplete(EnableInteract);
-            levelButton.transform.DOLocalMoveY(0f, 0.2f * ((int)level + 1));
+            levelButton.transform.DOLocalMoveY(levelButtonYPos, 0.2f * ((int)level + 1));
         }
         else
         {
             lockButton.SetActive(true);
             lockButton.GetComponent<Image>().enabled = true;
             lockButton.GetComponent<Image>().DOFade(100f / 255f, 0.2f * ((int)level + 1));
-            lockButton.transform.DOLocalMoveY(0f, 0.2f * ((int)level + 1));
+            lockButton.transform.DOLocalMoveY(levelButtonYPos, 0.2f * ((int)level + 1));
         }
 
         // 별 등장 애니메이션                
@@ -92,7 +94,7 @@ public class LevelWrapper : FOHBehavior
         {
             stars[star - 1].SetActive(true);
             stars[star - 1].GetComponent<Image>().enabled = true;
-            stars[star - 1].GetComponent<Image>().DOFade(1f, 0.2f).SetDelay(0.3f * ((int)level + 1));
+            stars[star - 1].GetComponent<Image>().DOFade(1f, 0.2f).SetDelay(0.2f * ((int)level + 1));
         }
     }
 

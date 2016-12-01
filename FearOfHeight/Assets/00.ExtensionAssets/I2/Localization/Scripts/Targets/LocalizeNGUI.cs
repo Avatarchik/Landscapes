@@ -85,8 +85,8 @@ namespace I2.Loc
 			{
 				if (!string.IsNullOrEmpty(MainTranslation) && input.defaultText != MainTranslation) 
 				{
-					if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL)
-						input.label.alignment = LocalizationManager.IsRight2Left ? NGUIText.Alignment.Right : mOriginalAlignmentNGUI;
+                    if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL && (input.label.alignment == NGUIText.Alignment.Left || input.label.alignment == NGUIText.Alignment.Right))
+                        input.label.alignment = LocalizationManager.IsRight2Left ? NGUIText.Alignment.Right : mOriginalAlignmentNGUI;
 
 					input.defaultText = MainTranslation;
 				}
@@ -95,7 +95,7 @@ namespace I2.Loc
 			{
 				if (!string.IsNullOrEmpty(MainTranslation) && mTarget_UILabel.text != MainTranslation) 
 				{
-					if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL)
+					if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL && (mTarget_UILabel.alignment==NGUIText.Alignment.Left || mTarget_UILabel.alignment == NGUIText.Alignment.Right))
 						mTarget_UILabel.alignment = LocalizationManager.IsRight2Left ? NGUIText.Alignment.Right : mOriginalAlignmentNGUI;
 
 					mTarget_UILabel.text = MainTranslation;

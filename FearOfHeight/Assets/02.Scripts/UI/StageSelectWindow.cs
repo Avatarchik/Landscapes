@@ -183,7 +183,8 @@ public class StageSelectWindow : FOHUIWindow
 
     public void Btn_Level1_Click()
     {
-        game.sounds.Play("FOH_Landscapes_Other_005 " + LocalizationManager.CurrentLanguage, game.NAVI);
+        game.sounds.Play("FOH_Landscapes_Other_005 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
+        
         game.FohStage.SetLevel(LevelType.Intro);
         if(game.FohStage.nowStageType == StageType.N_S5)
             game.FohStage.SetLevel(LevelType.LV1);
@@ -192,28 +193,28 @@ public class StageSelectWindow : FOHUIWindow
 
     public void Btn_Level2_Click()
     {
-        game.sounds.Play("FOH_Landscapes_Other_006 " + LocalizationManager.CurrentLanguage, game.NAVI);
+        game.sounds.Play("FOH_Landscapes_Other_006 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
         game.FohStage.SetLevel(LevelType.LV2);
         game.mainScene.state = SceneState.Play;
     }
 
     public void Btn_Level3_Click()
     {
-        game.sounds.Play("FOH_Landscapes_Other_007 " + LocalizationManager.CurrentLanguage, game.NAVI);
+        game.sounds.Play("FOH_Landscapes_Other_007 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
         game.FohStage.SetLevel(LevelType.LV3);
         game.mainScene.state = SceneState.Play;
     }
 
     public void Btn_Level4_Click()
     {
-        game.sounds.Play("FOH_Landscapes_Other_008 " + LocalizationManager.CurrentLanguage, game.NAVI);
+        game.sounds.Play("FOH_Landscapes_Other_008 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
         game.FohStage.SetLevel(LevelType.LV4);
         game.mainScene.state = SceneState.Play;
     }
 
     public void Btn_Level5_Click()
     {
-        game.sounds.Play("FOH_Landscapes_Other_009 " + LocalizationManager.CurrentLanguage, game.NAVI);
+        game.sounds.Play("FOH_Landscapes_Other_009 " + LocalizationManager.CurrentLanguageCode, game.NAVI);
         game.FohStage.SetLevel(LevelType.LV5);
         game.mainScene.state = SceneState.Play;
     }

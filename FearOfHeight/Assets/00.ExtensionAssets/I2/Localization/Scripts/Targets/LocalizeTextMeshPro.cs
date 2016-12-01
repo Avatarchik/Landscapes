@@ -90,13 +90,13 @@ namespace I2.Loc
 			{
 				if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL)
 				{
-					if (mTarget_TMPLabel.alignment <= TMPro.TextAlignmentOptions.TopJustified)
-						mTarget_TMPLabel.alignment = LocalizationManager.IsRight2Left ? TMPro.TextAlignmentOptions.TopRight : mOriginalAlignmentTMPro;
+                    int align = (int)mTarget_TMPLabel.alignment;
+
+                    if (align%4==0)
+						mTarget_TMPLabel.alignment = LocalizationManager.IsRight2Left ? mTarget_TMPLabel.alignment+2 : mOriginalAlignmentTMPro;
 					else
-					if (mTarget_TMPLabel.alignment <= TMPro.TextAlignmentOptions.Justified)
-						mTarget_TMPLabel.alignment = LocalizationManager.IsRight2Left ? TMPro.TextAlignmentOptions.Right : mOriginalAlignmentTMPro;
-					else
-						mTarget_TMPLabel.alignment = LocalizationManager.IsRight2Left ? TMPro.TextAlignmentOptions.BottomRight : mOriginalAlignmentTMPro;
+                    if (align % 4 == 2)
+                        mTarget_TMPLabel.alignment = LocalizationManager.IsRight2Left ? mTarget_TMPLabel.alignment - 2 : mOriginalAlignmentTMPro;
 				}
 
 				mTarget_TMPLabel.text = MainTranslation;
@@ -142,22 +142,36 @@ namespace I2.Loc
 			}
 			if (!string.IsNullOrEmpty(MainTranslation) && mTarget_TMPUGUILabel.text != MainTranslation)
 			{
-				if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL)
-				{
-					if (mTarget_TMPUGUILabel.alignment <= TMPro.TextAlignmentOptions.TopJustified)
-						mTarget_TMPUGUILabel.alignment = LocalizationManager.IsRight2Left ? TMPro.TextAlignmentOptions.TopRight : mOriginalAlignmentTMPro;
-					else
-					if (mTarget_TMPUGUILabel.alignment <= TMPro.TextAlignmentOptions.Justified)
-							mTarget_TMPUGUILabel.alignment = LocalizationManager.IsRight2Left ? TMPro.TextAlignmentOptions.Right : mOriginalAlignmentTMPro;
-					else
-						mTarget_TMPUGUILabel.alignment = LocalizationManager.IsRight2Left ? TMPro.TextAlignmentOptions.BottomRight : mOriginalAlignmentTMPro;
-				}
+                if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL)
+                {
+                    int align = (int)mTarget_TMPUGUILabel.alignment;
+
+                    if (align % 4 == 0)
+                        mTarget_TMPUGUILabel.alignment = LocalizationManager.IsRight2Left ? mTarget_TMPUGUILabel.alignment + 2 : mOriginalAlignmentTMPro;
+                    else
+                    if (align % 4 == 2)
+                        mTarget_TMPUGUILabel.alignment = LocalizationManager.IsRight2Left ? mTarget_TMPUGUILabel.alignment - 2 : mOriginalAlignmentTMPro;
+                }
+
 				mTarget_TMPUGUILabel.text = MainTranslation;
 				//mTarget_TMPUGUILabel.SetText(MainTranslation, 0);
 			}
 		}
 
-		TMPro.TMP_FontAsset GetTMPFontFromMaterial( string matName )
+    #if TextMeshPro_Pre53
+   		TMPro.TextMeshProFont GetTMPFontFromMaterial( string matName )
+		{
+			int idx = matName.IndexOf (" SDF");
+			if (idx>0)
+			{
+				var fontName = matName.Substring (0, idx + " SDF".Length);
+				return GetObject<TMPro.TextMeshProFont>(fontName);
+			}
+			return null;
+		}
+    #else
+        TMPro.TMP_FontAsset GetTMPFontFromMaterial( string matName )
+
 		{
 			int idx = matName.IndexOf (" SDF");
 			if (idx>0)
@@ -167,15 +181,15 @@ namespace I2.Loc
 			}
 			return null;
 		}
+    #endif
+    }
 
-	}
-
-	#else
-	public partial class Localize
+#else
+        public partial class Localize
 	{
 		public static void RegisterEvents_TextMeshPro()
 		{
 		}
 	}
-	#endif	
+#endif
 }

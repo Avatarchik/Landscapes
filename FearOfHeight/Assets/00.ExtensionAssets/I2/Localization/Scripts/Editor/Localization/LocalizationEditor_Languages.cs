@@ -23,11 +23,19 @@ namespace I2.Loc
 			OnGUI_LanguageList();
 
             OnGUI_StoreIntegration();
-		}
 
-		#region GUI Languages
-		
-		void OnGUI_LanguageList()
+            GUILayout.BeginHorizontal();
+                GUILayout.Label(new GUIContent("On Missing Translation:", "What should happen IN-GAME when a term is not yet translated to the current language?"), EditorStyles.boldLabel, GUILayout.Width(160));
+                GUILayout.BeginVertical();
+                    GUILayout.Space(7);
+                    EditorGUILayout.PropertyField(mProp_OnMissingTranslation, GUITools.EmptyContent, GUILayout.Width(165));
+                GUILayout.EndVertical();
+            GUILayout.EndHorizontal();
+        }
+
+        #region GUI Languages
+
+        void OnGUI_LanguageList()
 		{
 			GUILayout.BeginHorizontal(EditorStyles.toolbar);
 				GUILayout.FlexibleSpace();
@@ -124,7 +132,7 @@ namespace I2.Loc
 			{
 				mLanguageSource.RemoveLanguage( mLanguageSource.mLanguages[IndexLanguageToDelete].Name );
 				serializedObject.Update();
-				ParseTerms(true, false);
+                ParseTerms(true, false);
                 mShouldDetectStoreIntegration = true;
 			}
 
@@ -187,8 +195,8 @@ namespace I2.Loc
                 mShouldDetectStoreIntegration = true;
 				mLanguages_NewLanguage = "";
                 GUI.FocusControl(string.Empty);
-			}
-			GUI.enabled = true;
+            }
+            GUI.enabled = true;
 			
 			GUILayout.EndHorizontal();
 			
@@ -223,9 +231,9 @@ namespace I2.Loc
                 mShouldDetectStoreIntegration = true;
 				mLanguages_NewLanguage = "";
                 GUI.FocusControl(string.Empty);
-			}
-			
-			GUILayout.EndHorizontal();
+            }
+
+            GUILayout.EndHorizontal();
 			GUILayout.EndVertical();
 			GUI.color = Color.white;
 		}
@@ -267,8 +275,8 @@ namespace I2.Loc
 
 		void OnLanguageTranslated( string Result, string Error )
 		{
-			//Debug.Log (Evaluation);
-			if (!string.IsNullOrEmpty(Error)/* || !Evaluation.Contains("<i2>")*/)
+			//Debug.Log (Result);
+			if (!string.IsNullOrEmpty(Error)/* || !Result.Contains("<i2>")*/)
 		    {
 				ShowError ("Unable to access Google or not valid request");
 				return;
@@ -325,7 +333,7 @@ namespace I2.Loc
             lstyle.richText = true;
 
             GUILayout.BeginHorizontal ();
-                GUILayout.Label (new GUIContent("Store Integration:", "Setups the stores to detect that the game has localization, Android adds strings.xml for each language. IOS modifies the Info.plist"), EditorStyles.boldLabel);
+                GUILayout.Label (new GUIContent("Store Integration:", "Setups the stores to detect that the game has localization, Android adds strings.xml for each language. IOS modifies the Info.plist"), EditorStyles.boldLabel, GUILayout.Width(160));
 
                 GUILayout.BeginVertical();
                     GUILayout.BeginHorizontal ();

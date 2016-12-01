@@ -11,7 +11,8 @@ namespace I2.Loc
 		
 		SerializedProperty 	mProp_Assets, mProp_Languages, 
 							mProp_Google_WebServiceURL, mProp_GoogleUpdateFrequency, mProp_GoogleUpdateDelay, mProp_Google_SpreadsheetKey, mProp_Google_SpreadsheetName, 
-							mProp_Spreadsheet_LocalFileName, mProp_Spreadsheet_LocalCSVSeparator, mProp_CaseInsensitiveTerms, mProp_Spreadsheet_LocalCSVEncoding;
+							mProp_Spreadsheet_LocalFileName, mProp_Spreadsheet_LocalCSVSeparator, mProp_CaseInsensitiveTerms, mProp_Spreadsheet_LocalCSVEncoding,
+                            mProp_OnMissingTranslation;
 
 		public static LanguageSource mLanguageSource;
 
@@ -57,18 +58,20 @@ namespace I2.Loc
 
 			if (!LocalizationManager.Sources.Contains(mLanguageSource))
 				LocalizationManager.UpdateSources();
-			mProp_Assets 					= serializedObject.FindProperty("Assets");
-			mProp_Languages 				= serializedObject.FindProperty("mLanguages");
-			mProp_Google_WebServiceURL		= serializedObject.FindProperty("Google_WebServiceURL");
-			mProp_GoogleUpdateFrequency 	= serializedObject.FindProperty("GoogleUpdateFrequency");
-			mProp_GoogleUpdateDelay			= serializedObject.FindProperty("GoogleUpdateDelay");
-			mProp_Google_SpreadsheetKey 	= serializedObject.FindProperty("Google_SpreadsheetKey");
-			mProp_Google_SpreadsheetName	= serializedObject.FindProperty("Google_SpreadsheetName");
-			mProp_CaseInsensitiveTerms 		= serializedObject.FindProperty("CaseInsensitiveTerms");
-			mProp_Spreadsheet_LocalFileName = serializedObject.FindProperty("Spreadsheet_LocalFileName");
-			mProp_Spreadsheet_LocalCSVSeparator = serializedObject.FindProperty("Spreadsheet_LocalCSVSeparator");
-			mProp_Spreadsheet_LocalCSVEncoding = serializedObject.FindProperty("Spreadsheet_LocalCSVEncoding");
-			if (!mIsParsing)
+            mProp_Assets                        = serializedObject.FindProperty("Assets");
+            mProp_Languages                     = serializedObject.FindProperty("mLanguages");
+            mProp_Google_WebServiceURL          = serializedObject.FindProperty("Google_WebServiceURL");
+            mProp_GoogleUpdateFrequency         = serializedObject.FindProperty("GoogleUpdateFrequency");
+            mProp_GoogleUpdateDelay             = serializedObject.FindProperty("GoogleUpdateDelay");
+            mProp_Google_SpreadsheetKey         = serializedObject.FindProperty("Google_SpreadsheetKey");
+            mProp_Google_SpreadsheetName        = serializedObject.FindProperty("Google_SpreadsheetName");
+            mProp_CaseInsensitiveTerms          = serializedObject.FindProperty("CaseInsensitiveTerms");
+            mProp_Spreadsheet_LocalFileName     = serializedObject.FindProperty("Spreadsheet_LocalFileName");
+            mProp_Spreadsheet_LocalCSVSeparator = serializedObject.FindProperty("Spreadsheet_LocalCSVSeparator");
+            mProp_Spreadsheet_LocalCSVEncoding  = serializedObject.FindProperty("Spreadsheet_LocalCSVEncoding");
+            mProp_OnMissingTranslation          = serializedObject.FindProperty("OnMissingTranslation");
+
+            if (!mIsParsing)
 			{
 				if (string.IsNullOrEmpty(mLanguageSource.Google_SpreadsheetKey))
 					mSpreadsheetMode = eSpreadsheetMode.Local;
@@ -82,11 +85,11 @@ namespace I2.Loc
 				if (ForceParse || mParsedTerms.Count < mLanguageSource.mTerms.Count )
 					ParseTerms(true);
 			}
-			mShowableTerms.Clear ();
-			//UpgradeManager.EnablePlugins();
-		}
+            ScheduleUpdateTermsToShowInList();
+            //UpgradeManager.EnablePlugins();
+        }
 
-		void UpdateSelectedKeys()
+        void UpdateSelectedKeys()
 		{
 			// Remove all keys that are not in this source
 			string trans;

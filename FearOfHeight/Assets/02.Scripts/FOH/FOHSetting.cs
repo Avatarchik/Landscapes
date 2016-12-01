@@ -7,43 +7,95 @@ public class FOHSetting : MonoBehaviour
     public enum LanguageType
     {
         English,
+        German,
         Korean,
+        Russian,
+        /*
+        Portuguese,
+        ChineseTraditional,
+        Spanish,
+        */
         Auto
     }
 
     public LanguageType languageType;
 
-    private I2.Loc.SetLanguage m_SetLanguage;
-
     void Awake()
     {
-        m_SetLanguage = FindObjectOfType<SetLanguage>();
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+        // S6
+	    if (SystemInfo.deviceModel.Contains("G920") || SystemInfo.deviceModel.Contains("G925") ||
+	        SystemInfo.deviceModel.Contains("G928") || SystemInfo.deviceModel.Contains("N920"))
+	    {
+	        QualitySettings.SetQualityLevel(2);
+	    }
+
+        // Others
+	    else
+	    {
+            QualitySettings.SetQualityLevel(1);
+        }
+#endif
 
         if (languageType == LanguageType.Auto)
         {
-            if (Application.systemLanguage == SystemLanguage.Korean)
+            switch (Application.systemLanguage)
             {
-                m_SetLanguage._Language = "Kor";
-                m_SetLanguage.ApplyLanguage();
+                case SystemLanguage.Korean:
+                    LocalizationManager.CurrentLanguage = "Korean";
+                    break;
+                case SystemLanguage.English:
+                    LocalizationManager.CurrentLanguage = "English";
+                    break;
+                case SystemLanguage.German:
+                    LocalizationManager.CurrentLanguage = "German";
+                    break;
+                case SystemLanguage.Russian:
+                    LocalizationManager.CurrentLanguage = "Russian";
+                    break;
+                /*
+                case SystemLanguage.Portuguese:
+                    LocalizationManager.CurrentLanguage = "Portuguese";
+                    break;
+                case SystemLanguage.Spanish:
+                    LocalizationManager.CurrentLanguage = "Spanish";
+                    break;
+                case SystemLanguage.ChineseTraditional:
+                    LocalizationManager.CurrentLanguage = "Chinese (Traditional)";
+                    break;
+                    */
             }
-            else
+        }
+        else
+        {
+            switch (languageType)
             {
-                m_SetLanguage._Language = "Eng";
-                m_SetLanguage.ApplyLanguage();
+                case LanguageType.Korean:
+                    LocalizationManager.CurrentLanguage = "Korean";
+                    break;
+                case LanguageType.English:
+                    LocalizationManager.CurrentLanguage = "English";
+                    break;
+                case LanguageType.German:
+                    LocalizationManager.CurrentLanguage = "German";
+                    break;
+                case LanguageType.Russian:
+                    LocalizationManager.CurrentLanguage = "Russian";
+                    break;
+                    /*
+                case LanguageType.Portuguese:
+                    LocalizationManager.CurrentLanguage = "Portuguese";
+                    break;
+                case LanguageType.Spanish:
+                    LocalizationManager.CurrentLanguage = "Spanish";
+                    break;
+                case LanguageType.ChineseTraditional:
+                    LocalizationManager.CurrentLanguage = "Chinese (Traditional)";
+                    break;
+                    */
             }
-        }
-
-        else if (languageType == LanguageType.English)
-        {
-            m_SetLanguage._Language = "Eng";
-            m_SetLanguage.ApplyLanguage();
-        }
-
-        else if (languageType == LanguageType.Korean)
-        {
-            m_SetLanguage._Language = "Kor";
-            m_SetLanguage.ApplyLanguage();
-        }
+        }        
     }
 
     void FixedUpdate()

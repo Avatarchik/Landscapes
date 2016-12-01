@@ -11,14 +11,15 @@ using System;
 namespace I2.Loc
 {
 	[CustomEditor(typeof(Localize))]
-	public partial class LocalizeInspector : Editor
+    [CanEditMultipleObjects]
+    public partial class LocalizeInspector : Editor
 	{
 		#region Variables
 
 		Localize mLocalize;
 		SerializedProperty 	mProp_mTerm, mProp_mTermSecondary,
 							mProp_TranslatedObjects, mProp_LocalizeOnAwake, mProp_AlwaysForceLocalize,
-							mProp_IgnoreRTL, mProp_MaxCharactersInRTL, mProp_CorrectAlignmentForRTL;
+							mProp_IgnoreRTL, mProp_MaxCharactersInRTL, mProp_CorrectAlignmentForRTL, mProp_IgnoreNumbersInRTL;
 
 
 		bool mAllowEditKeyName = false;
@@ -45,11 +46,24 @@ namespace I2.Loc
 			mProp_TranslatedObjects  		= serializedObject.FindProperty("TranslatedObjects");
 			mProp_IgnoreRTL			 		= serializedObject.FindProperty("IgnoreRTL");
 			mProp_MaxCharactersInRTL 		= serializedObject.FindProperty ("MaxCharactersInRTL");
-			mProp_CorrectAlignmentForRTL 	= serializedObject.FindProperty ("CorrectAlignmentForRTL");
+            mProp_IgnoreNumbersInRTL        = serializedObject.FindProperty("IgnoreNumbersInRTL");
+            mProp_CorrectAlignmentForRTL 	= serializedObject.FindProperty ("CorrectAlignmentForRTL");
 			mProp_LocalizeOnAwake    		= serializedObject.FindProperty("LocalizeOnAwake");
 			mProp_AlwaysForceLocalize		= serializedObject.FindProperty("AlwaysForceLocalize");
 
-			if (LocalizationManager.Sources.Count==0)
+            // Check Copy/Paste Localize component into another gameObject
+            if (mLocalize.mTarget != null)
+            {
+                var cmp = mLocalize.mTarget as Component;
+                if (cmp != null && cmp.gameObject != mLocalize.gameObject)
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    mLocalize.mTarget = null;
+                    serializedObject.Update();
+                }
+            }
+
+            if (LocalizationManager.Sources.Count==0)
 				LocalizationManager.UpdateSources();
 			//LocalizationEditor.ParseTerms (true);
 
@@ -247,7 +261,11 @@ namespace I2.Loc
 					if (!mLocalize.IgnoreRTL)
 					{
 						mProp_MaxCharactersInRTL.intValue = EditorGUILayout.IntField( new GUIContent("Max line length", "If the language is Right To Left, long lines will be split at this length and the RTL fix will be applied to each line, this should be set to the maximum number of characters that fit in this text width. 0 disables the per line fix"), mProp_MaxCharactersInRTL.intValue );
+                        GUILayout.BeginHorizontal();
 						mProp_CorrectAlignmentForRTL.boolValue = GUILayout.Toggle(mProp_CorrectAlignmentForRTL.boolValue, new GUIContent(" Adjust Alignment", "Right-align when Right-To-Left Language, and Left-Align otherwise") );
+                        GUILayout.FlexibleSpace();
+                        mProp_IgnoreNumbersInRTL.boolValue = GUILayout.Toggle(mProp_IgnoreNumbersInRTL.boolValue, new GUIContent(" Ignore Numbers", "Preserve numbers as latin characters instead of converting them"));
+                    GUILayout.EndHorizontal();
 					}
 
 				GUILayout.EndHorizontal();
@@ -381,8 +399,12 @@ namespace I2.Loc
 					if (Source==null)
 						Source = LocalizationManager.Sources[0];
 
-					Source.AddTerm( mNewKeyName, eTermType.Text );
-					mAllowEditKeyName = false;
+					var data = Source.AddTerm( mNewKeyName, eTermType.Text, false );
+                    if (data.Languages.Length > 0)
+                        data.Languages[0] = mLocalize.GetMainTargetsText();
+                    UnityEditor.EditorUtility.SetDirty(Source);
+                    UnityEditor.AssetDatabase.SaveAssets();
+                    mAllowEditKeyName = false;
 					bChanged = true;
 					GUIUtility.keyboardControl = 0;
 				}
@@ -539,7 +561,8 @@ namespace I2.Loc
 			int index = EditorGUILayout.Popup(CurrentTarget, TargetTypes.ToArray());
 			if (GUI.changed)
 			{
-				switch (TargetTypes[index])
+                serializedObject.ApplyModifiedProperties();
+                switch (TargetTypes[index])
 				{
 					case "GUIText" 				:  mLocalize.mTarget = mLocalize.GetComponent<GUIText>(); break;
 					case "TextMesh" 			:  mLocalize.mTarget = mLocalize.GetComponent<TextMesh>(); break;
@@ -583,8 +606,9 @@ namespace I2.Loc
 					case "Prefab" 				:  mLocalize.mTarget = mLocalize.transform.GetChild(0).gameObject; break;
 				}
 				mLocalize.FindTarget();
-			}
-			GUILayout.EndHorizontal();
+                serializedObject.Update();
+            }
+            GUILayout.EndHorizontal();
 		}
 
 		void TestTargetType<T>( ref List<string> TargetTypes, string TypeName, ref int CurrentTarget ) where T : Component

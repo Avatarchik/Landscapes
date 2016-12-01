@@ -13,8 +13,9 @@ namespace I2.Loc
 		
 		tk2dTextMesh 	mTarget_tk2dTextMesh;
 		tk2dBaseSprite 	mTarget_tk2dBaseSprite;
+        TextAnchor mOriginalAlignmentTk2d = TextAnchor.MiddleCenter;
 
-		public void RegisterEvents_2DToolKit()
+        public void RegisterEvents_2DToolKit()
 		{
 			EventFindTarget += FindTarget_tk2dTextMesh;
 			EventFindTarget += FindTarget_tk2dBaseSprite;
@@ -58,8 +59,27 @@ namespace I2.Loc
 				mTarget_tk2dTextMesh.font = newFont.data;
 			}
 
-			if (!string.IsNullOrEmpty(MainTranslation) && mTarget_tk2dTextMesh.text != MainTranslation) 
-				mTarget_tk2dTextMesh.text = MainTranslation;
+
+            if (mInitializeAlignment)
+            {
+                mInitializeAlignment = false;
+                mOriginalAlignmentTk2d = mTarget_tk2dTextMesh.anchor;
+            }
+
+            if (!string.IsNullOrEmpty(MainTranslation) && mTarget_tk2dTextMesh.text != MainTranslation)
+            {
+                if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL)
+                {
+                    int align = (int)mTarget_tk2dTextMesh.anchor;
+
+                    if (align % 3 == 0)
+                        mTarget_tk2dTextMesh.anchor = LocalizationManager.IsRight2Left ? mTarget_tk2dTextMesh.anchor + 2 : mOriginalAlignmentTk2d;
+                    else
+                    if (align % 3 == 2)
+                        mTarget_tk2dTextMesh.anchor = LocalizationManager.IsRight2Left ? mTarget_tk2dTextMesh.anchor - 2 : mOriginalAlignmentTk2d;
+                }
+                mTarget_tk2dTextMesh.text = MainTranslation;
+            }
 		}
 		
 		public void DoLocalize_tk2dBaseSprite(string MainTranslation, string SecondaryTranslation)
