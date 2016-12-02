@@ -55,7 +55,6 @@ public class FOHSceneManager : FOHBehavior
 
         if (currentSceneState != SceneState.Play)
         {
-            print("abcd");
             game.blink.FadeOut();
         }
     }
