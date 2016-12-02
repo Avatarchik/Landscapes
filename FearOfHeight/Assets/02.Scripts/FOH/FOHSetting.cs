@@ -10,9 +10,9 @@ public class FOHSetting : MonoBehaviour
         German,
         Korean,
         Russian,
+        ChineseTraditional,
         /*
         Portuguese,
-        ChineseTraditional,
         Spanish,
         */
         Auto
@@ -54,6 +54,9 @@ public class FOHSetting : MonoBehaviour
                 case SystemLanguage.Russian:
                     LocalizationManager.CurrentLanguage = "Russian";
                     break;
+                case SystemLanguage.ChineseTraditional:
+                    LocalizationManager.CurrentLanguage = "Chinese (Traditional)";
+                    break;
                 /*
                 case SystemLanguage.Portuguese:
                     LocalizationManager.CurrentLanguage = "Portuguese";
@@ -61,10 +64,8 @@ public class FOHSetting : MonoBehaviour
                 case SystemLanguage.Spanish:
                     LocalizationManager.CurrentLanguage = "Spanish";
                     break;
-                case SystemLanguage.ChineseTraditional:
-                    LocalizationManager.CurrentLanguage = "Chinese (Traditional)";
-                    break;
-                    */
+
+                */
             }
         }
         else
@@ -83,15 +84,15 @@ public class FOHSetting : MonoBehaviour
                 case LanguageType.Russian:
                     LocalizationManager.CurrentLanguage = "Russian";
                     break;
+                case LanguageType.ChineseTraditional:
+                    LocalizationManager.CurrentLanguage = "Chinese (Traditional)";
+                    break;
                     /*
                 case LanguageType.Portuguese:
                     LocalizationManager.CurrentLanguage = "Portuguese";
                     break;
                 case LanguageType.Spanish:
                     LocalizationManager.CurrentLanguage = "Spanish";
-                    break;
-                case LanguageType.ChineseTraditional:
-                    LocalizationManager.CurrentLanguage = "Chinese (Traditional)";
                     break;
                     */
             }
