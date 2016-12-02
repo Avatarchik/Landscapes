@@ -210,4 +210,16 @@ public class FOHReadyScene : FSMBase
     }
 
     #endregion
+
+    #region Error
+
+    private IEnumerator ErrorEnterState()
+    {
+        game.blink.FadeOut();
+        game.background.BackgroundSplash();
+        game.ui.ChangeWindow(FOHWindowType.Error);
+        yield break;
+    }
+
+    #endregion
 }

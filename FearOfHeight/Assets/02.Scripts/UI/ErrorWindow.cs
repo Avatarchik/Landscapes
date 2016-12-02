@@ -7,5 +7,4 @@ public class ErrorWindow : FOHUIWindow
     {
         Application.Quit();
     }
-
 }
