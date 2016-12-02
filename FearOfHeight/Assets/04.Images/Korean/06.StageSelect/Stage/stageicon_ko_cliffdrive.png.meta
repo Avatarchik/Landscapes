@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: d15a5a4622faea44ea8923911034b625
-timeCreated: 1480596903
+guid: 55ccde051d754944db1c44afe3acc2f6
+timeCreated: 1480665821
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName: {}
@@ -53,7 +53,7 @@ TextureImporter:
     serializedVersion: 2
     sprites: []
     outline: []
-  spritePackingTag: Stage_ko
+  spritePackingTag: StageSelect_ko
   userData: 
   assetBundleName: 
   assetBundleVariant: 

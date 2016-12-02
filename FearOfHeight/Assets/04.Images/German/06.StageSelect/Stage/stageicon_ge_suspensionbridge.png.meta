@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 4445324ee6b398b42afa43928918f67d
-timeCreated: 1480596872
+guid: 6da2e9f1fc8c10a4db5ca94341453b7d
+timeCreated: 1480665788
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName: {}
@@ -53,7 +53,7 @@ TextureImporter:
     serializedVersion: 2
     sprites: []
     outline: []
-  spritePackingTag: StageSelect_ge
+  spritePackingTag: StageSelect_de
   userData: 
   assetBundleName: 
   assetBundleVariant: 
