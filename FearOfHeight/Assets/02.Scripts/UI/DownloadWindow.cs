@@ -119,7 +119,7 @@ public class DownloadWindow : FOHUIWindow
     private void SlideShowFadeIn()
     {
         slideShowCnt++;
-        if (slideShowCnt > 10)
+        if (slideShowCnt > 9)
         {
             slideShowCnt = 0;
         }
@@ -141,7 +141,7 @@ public class DownloadWindow : FOHUIWindow
         photos[slideShowHeadIndex].transform.DOLocalMoveX(1200f, 0f);
         photosImage[slideShowHeadIndex].DOFade(0f, 0f);
         slideShowHeadIndex++;
-        if (slideShowHeadIndex > 10)
+        if (slideShowHeadIndex > 9)
         {
             slideShowHeadIndex = 0;
         }        
