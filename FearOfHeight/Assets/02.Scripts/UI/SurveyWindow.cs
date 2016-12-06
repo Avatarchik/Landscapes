@@ -110,8 +110,6 @@ public class SurveyWindow : FOHUIWindow {
             return;
 
         survey.SetActive(false);
-
-        game.FohStage.SetStar(game.FohStage.CalculateScore(1.0f , 1.0f , 1.0f));
         game.scene.SetState(SceneState.Evaluation);
     }
 }

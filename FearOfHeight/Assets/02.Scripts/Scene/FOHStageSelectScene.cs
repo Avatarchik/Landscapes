@@ -76,7 +76,6 @@ public class FOHStageSelectScene : FSMBase
         OVRManager.gpuLevel = 2;
         game.blink.FadeOut();
         game.background.bGMesh.SetActive(true);
-        game.FohStage.Reset();
 
         game.ui.ChangeWindow(FOHWindowType.StageSelect);
         game.background.BackgroundBlack();

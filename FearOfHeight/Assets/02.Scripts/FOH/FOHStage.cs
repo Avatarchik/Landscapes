@@ -38,9 +38,9 @@ public class FOHStage
     private int hbrTotal;
     private int hbrCount;
     private FOHAccount.GameData data;
+    private float gazeTime = 0.0f;
     private const float pointingRotMin = 30.0f;
     private const float pointingRotMax = 90.0f;
-    private float hoverNowTime = 0.0f;
 
     public void ManualUpdate()
     {
@@ -48,30 +48,15 @@ public class FOHStage
         HBRCheck();
 
         ms += FOHTime.globalDeltaTime;
-
-        if (mediaPlayer == null)
-            return; 
-
-        if (mediaPlayer.Control.IsFinished())
-        {
-            if (nowLevelType == LevelType.Intro)
-            {
-                LevelClear();
-                LoadMovie();
-                return;
-            }
-
-            RecordNowData();
-        }
     }
 
     public void RecordNowData()
     {
+        data.gazeTime = gazeTime;
         data.levelType = nowLevelType;
         data.baseLine = game.account.baseLine;
         string date = System.DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
         SetDate(date);
-
         ms = mediaPlayer.Info.GetDurationMs();
     }
 
@@ -88,6 +73,7 @@ public class FOHStage
         data.stageType = nowStageType;
         data.levelType = nowLevelType;
         ms = 0.0f;
+        gazeTime = 0.0f;
     }
 
     public FOHAccount.GameData GetData()
@@ -127,7 +113,6 @@ public class FOHStage
     public void SetLevel(LevelType type)
     {
         nowLevelType = type;
-//        data.levelType = nowLevelType;
     }
 
     public void LevelClear()
@@ -166,18 +151,18 @@ public class FOHStage
 #if UNITY_EDITOR
         if (game.scene.ovr.transform.rotation.eulerAngles.x > pointingRotMin
          && game.scene.ovr.transform.rotation.eulerAngles.x < pointingRotMax)
-            data.gazeTime += FOHTime.globalDeltaTime;
+            gazeTime += FOHTime.globalDeltaTime;
 #endif
 
 #if UNITY_ANDROID
         if (UnityEngine.VR.InputTracking.GetLocalRotation(UnityEngine.VR.VRNode.CenterEye).eulerAngles.x > pointingRotMin
          && UnityEngine.VR.InputTracking.GetLocalRotation(UnityEngine.VR.VRNode.CenterEye).eulerAngles.x < pointingRotMax)
-            data.gazeTime += FOHTime.globalDeltaTime;
+            gazeTime += FOHTime.globalDeltaTime;
 #endif
     }
 
 
-    public int CalculateScore(float ratio1, float ratio2, float ratio3)
+    public int CalculateScore()
     {
         float gazeScore = (data.gazeTime / (ms / 1000.0f)) * 100.0f;
         data.gazeScore = gazeScore;

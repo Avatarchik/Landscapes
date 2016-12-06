@@ -160,7 +160,6 @@ public class EvaluationWindow : FOHUIWindow
 
     public void TryAgainButtonClick()
     {
-        game.FohStage.Reset();
         game.scene.SetState(SceneState.Play);
     }
 

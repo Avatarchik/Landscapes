@@ -39,7 +39,6 @@ public class ResultWindow : FOHUIWindow
         baselineGage.fillAmount = 0f;
         hbrGage.fillAmount = 0f;
 
-
         if (selectedData.baseLine <= 0)
         {
             Debug.Log("No GearS Data");
@@ -76,16 +75,6 @@ public class ResultWindow : FOHUIWindow
 
     public void BackButtonClick()
     {
-        // HISTORY로 되돌아가기
-        if (FOHResultScene.previousScene.ToString() == SceneState.OtherResults.ToString())
-        {
-            game.scene.SetState(SceneState.OtherResults);//TODO : 리팩토링 필요(씬나눠야함 히스토리)
-            return;
-        }
-        // RESULT로 되돌아가기
-        if (FOHResultScene.previousScene.ToString() == SceneState.Evaluation.ToString())
-        {
-            game.scene.SetState(SceneState.Evaluation);
-        }
+        game.scene.SetState(FOHResultScene.previousScene);
     }
 }

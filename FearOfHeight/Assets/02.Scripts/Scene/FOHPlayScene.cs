@@ -86,6 +86,16 @@ public class FOHPlayScene : FOHSceneManager
                 break;
             case MediaPlayerEvent.EventType.FinishedPlaying:
                 game.blink.FadeIn();
+
+                if (game.FohStage.nowLevelType == LevelType.Intro)
+                {
+                    game.FohStage.LevelClear();
+                    game.FohStage.LoadMovie();
+                    return;
+                }
+
+                game.FohStage.RecordNowData();
+
                 if (game.FohStage.nowLevelType == LevelType.Intro)
                     return;
                 if (game.account.useSelfEvaluation)
@@ -97,8 +107,7 @@ public class FOHPlayScene : FOHSceneManager
                 else
                 {
                     OVRManager.cpuLevel = 0;
-                    OVRManager.gpuLevel = 1;
-                    game.FohStage.SetStar(game.FohStage.CalculateScore(0.1f, 0.1f, 0.8f));
+                    OVRManager.gpuLevel = 1;                    
                     SetState(SceneState.Evaluation);
                 }
                 break;

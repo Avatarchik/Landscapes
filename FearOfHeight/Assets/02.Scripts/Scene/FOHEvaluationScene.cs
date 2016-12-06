@@ -15,6 +15,7 @@
 
     private void ReportStage()
     {
+        game.FohStage.SetStar(game.FohStage.CalculateScore());
         FOHAccount.GameData data = game.FohStage.GetData();
         game.account.AddHistoryData(data);
         ResultWindow.selectedData = data;
