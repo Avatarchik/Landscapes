@@ -58,15 +58,18 @@ public class StageSelectWindow : FOHUIWindow
         {
             if (selectedStage != StageType.Max)
             {
-                baselineBar[0].transform.DOLocalMoveY(150, tweenTime);
-                baselineBar[1].transform.DOLocalMoveY(-175f, tweenTime);
+                if (game.ui.tweening == false)
+                {
+                    baselineBar[0].transform.DOLocalMoveY(150, tweenTime);
+                    baselineBar[1].transform.DOLocalMoveY(-175f, tweenTime);
 
-                mainWrapper.transform.DOLocalMoveY(0f, tweenTime);
-                subWrapper.transform.DOLocalMoveY(-275f, tweenTime);
+                    mainWrapper.transform.DOLocalMoveY(0f, tweenTime);
+                    subWrapper.transform.DOLocalMoveY(-275f, tweenTime);
 
-                stageWrapper[(int)selectedStage].Close();
+                    stageWrapper[(int)selectedStage].Close();
 
-                selectedStage = StageType.Max;
+                    selectedStage = StageType.Max;
+                }
             }
         }
     }    

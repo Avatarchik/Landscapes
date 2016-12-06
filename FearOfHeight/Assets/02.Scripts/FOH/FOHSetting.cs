@@ -10,7 +10,7 @@ public class FOHSetting : MonoBehaviour
         German,
         Korean,
         Russian,
-        ChineseTraditional,
+        HongKong,
         /*
         Portuguese,
         Spanish,
@@ -55,48 +55,45 @@ public class FOHSetting : MonoBehaviour
                     LocalizationManager.CurrentLanguage = "Russian";
                     break;
                 case SystemLanguage.ChineseTraditional:
-                    LocalizationManager.CurrentLanguage = "Chinese (Traditional)";
+                    LocalizationManager.CurrentLanguage = "HongKong";
                     break;
-                /*
+                    /*
                 case SystemLanguage.Portuguese:
                     LocalizationManager.CurrentLanguage = "Portuguese";
                     break;
                 case SystemLanguage.Spanish:
                     LocalizationManager.CurrentLanguage = "Spanish";
                     break;
-
-                */
-            }
-        }
-        else
-        {
-            switch (languageType)
-            {
-                case LanguageType.Korean:
-                    LocalizationManager.CurrentLanguage = "Korean";
-                    break;
-                case LanguageType.English:
-                    LocalizationManager.CurrentLanguage = "English";
-                    break;
-                case LanguageType.German:
-                    LocalizationManager.CurrentLanguage = "German";
-                    break;
-                case LanguageType.Russian:
-                    LocalizationManager.CurrentLanguage = "Russian";
-                    break;
-                case LanguageType.ChineseTraditional:
-                    LocalizationManager.CurrentLanguage = "Chinese (Traditional)";
-                    break;
-                    /*
-                case LanguageType.Portuguese:
-                    LocalizationManager.CurrentLanguage = "Portuguese";
-                    break;
-                case LanguageType.Spanish:
-                    LocalizationManager.CurrentLanguage = "Spanish";
-                    break;
                     */
             }
-        }        
+        }
+
+        switch (languageType)
+        {
+            case LanguageType.Korean:
+                LocalizationManager.CurrentLanguage = "Korean";
+                break;
+            case LanguageType.English:
+                LocalizationManager.CurrentLanguage = "English";
+                break;
+            case LanguageType.German:
+                LocalizationManager.CurrentLanguage = "German";
+                break;
+            case LanguageType.Russian:
+                LocalizationManager.CurrentLanguage = "Russian";
+                break;
+            case LanguageType.HongKong:
+                LocalizationManager.CurrentLanguage = "HongKong";
+                break;
+                /*
+            case LanguageType.Portuguese:
+                LocalizationManager.CurrentLanguage = "Portuguese";
+                break;
+            case LanguageType.Spanish:
+                LocalizationManager.CurrentLanguage = "Spanish";
+                break;            
+                */
+        }
     }
 
     void FixedUpdate()
