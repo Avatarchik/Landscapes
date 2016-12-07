@@ -11,9 +11,9 @@ public class FOHSetting : MonoBehaviour
         Korean,
         Russian,
         HongKong,
+        Spanish,
         /*
         Portuguese,
-        Spanish,
         */
         Auto
     }
@@ -57,12 +57,12 @@ public class FOHSetting : MonoBehaviour
                 case SystemLanguage.ChineseTraditional:
                     LocalizationManager.CurrentLanguage = "HongKong";
                     break;
+                case SystemLanguage.Spanish:
+                    LocalizationManager.CurrentLanguage = "Spanish";
+                    break;
                     /*
                 case SystemLanguage.Portuguese:
                     LocalizationManager.CurrentLanguage = "Portuguese";
-                    break;
-                case SystemLanguage.Spanish:
-                    LocalizationManager.CurrentLanguage = "Spanish";
                     break;
                     */
             }
@@ -85,13 +85,13 @@ public class FOHSetting : MonoBehaviour
             case LanguageType.HongKong:
                 LocalizationManager.CurrentLanguage = "HongKong";
                 break;
+            case LanguageType.Spanish:
+                LocalizationManager.CurrentLanguage = "Spanish";
+                break;
                 /*
             case LanguageType.Portuguese:
                 LocalizationManager.CurrentLanguage = "Portuguese";
-                break;
-            case LanguageType.Spanish:
-                LocalizationManager.CurrentLanguage = "Spanish";
-                break;            
+                break;         
                 */
         }
     }

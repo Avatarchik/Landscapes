@@ -53,10 +53,10 @@ public class StageWrapper : FOHBehavior
         }
         for (int i = 0; i < levelWrapper.Length; i++)
         {
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.2f);
             levelWrapper[i].Open();
         }
-        yield return new WaitForSeconds(0.3f * levelWrapper.Length + 0.1f);
+        yield return new WaitForSeconds(0.2f * levelWrapper.Length + 0.1f);
         game.ui.tweening = false;
         game.input.TryPointerEnterEvent();
     }
